@@ -1,0 +1,7 @@
+<template name="FileInput">
+  <span class="btn btn-default" style="position: relative; overflow: hidden">
+    Browse <input name="{{ field.label }}" type="file" placeholder="{{ field.helpText }}" class="form-control {{ field.label }}" style="position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%; font-size: 100px; text-align: right; filter: alpha(opacity=0); opacity: 0; outline: none; background: white; cursor: inherit; display: block;" />
+  </span>
+  <button type="button" class="btn btn-info btn-upload">Upload</button>
+  <p class="help-block"><small><strong>current file:</strong> {{ toDOM }}</small></p>
+</template>
