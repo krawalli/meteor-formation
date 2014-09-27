@@ -1,0 +1,65 @@
+
+<template name="dxField">
+	<div class="container-fluid">
+
+		<div class="form-group {{ class }} {{#if errors }}has-error{{else}}has-success{{/if}}">
+			<label class="col-sm-2 col-md-2 col-lg-2 control-label">{{ field.label }}</label>
+			<div class="col-sm-10 col-md-10 col-lg-10">
+				{{# if inEditMode }}
+					{{> dxInput }}
+				{{ else }}
+					<p name="{{ field.label }}" class="form-control-static {{ field.label }}">{{ instanceSummary toDOM }}</p>
+				{{/ if }}
+			</div>
+		</div>
+	</div>
+
+</template>
+
+
+<template name="dxInput">
+	{{> getWidget }}
+	{{# each errors }}
+		<p class="help-block errors"><small>{{ message }}</small></p>
+	{{/ each }}
+</template>
+
+
+<template name="dxSelectChoice">
+		{{# each field.choices }}
+			<option value="{{# if _id }}{{ _id }}{{ else }}{{ this }}{{/if}}" {{ selected ../value }}>
+				{{# if summary }}
+					{{ summary }}
+				{{ else }}
+					{{ this }}
+				{{/ if }}
+			</option>
+		{{/ each }}
+</template>
+
+<template name="dxCheckboxChoice">
+	{{# each field.choices }}
+		<div class="checkbox form-control {{ field.label }}">
+			<label for="{{ ../name }}" class="{{ ../label }}">
+				<input type="checkbox" name="{{ ../label }}" value="{{# if _id }}{{ _id }}{{ else }}{{ this }}{{/if}}" class="form-control {{ ../label }}" {{ checked ../value }}>
+				{{ value }}
+			</label>
+		</div>
+	{{/ each }}
+</template>
+
+
+<template name="dxRadioChoice">
+	{{# each field.choices }}
+		<div class="radio">
+			<label for="{{ ../field.label }}" class="{{ ../field.label }}">
+				<input type="radio" name="{{ ../field.label }}" value="{{# if _id }}{{ _id }}{{ else }}{{ this }}{{/if}}" {{ checked ../value }}>
+				{{# if summary }}
+					{{ summary }}
+				{{ else }}
+					{{ this }}
+				{{/ if }}
+			</label>
+		</div>
+	{{/ each }}
+</template>

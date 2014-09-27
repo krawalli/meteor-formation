@@ -1,0 +1,31 @@
+<template name="RadioInput">
+  {{> dxRadioChoice }}
+</template>
+
+
+<template name="CheckboxInput">
+  <div class="checkbox">
+    <label for="{{ field.label }}" class="{{ field.helpText }}">
+      <input type="checkbox" name="{{ field.label }}" value="{{ toDOM }}" class="form-control {{ field.label }}" checked={{ checkboxed value }}>
+    </label>
+  </div>
+</template>
+
+
+<template name="CheckboxMultiple">
+  {{> dxCheckboxChoice }}
+</template>
+
+
+<template name="SelectInput">
+  <select name="{{ field.label }}" class="form-control {{ field.label }}">
+    {{> dxSelectChoice }}
+  </select>
+</template>
+
+
+<template name="SelectMultiple">
+  <select name="{{ field.label }}" data-live-search="true" class="form-control {{ field.label }} selectpicker" multiple>
+    {{> dxSelectChoice }}
+  </select>
+</template>

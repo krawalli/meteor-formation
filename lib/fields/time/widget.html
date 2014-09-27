@@ -1,0 +1,31 @@
+<template name="TimeChoiceInput">
+  <div class="col-sm-4">
+    <select name="{{ field.label }}" class="form-control hour">
+      {{#each field.choices.hours }}
+        <option value="{{this}}" {{ hourSelected ../toDOM }}>{{this}}</option>
+      {{/each }}
+    </select>
+  </div>
+
+  <div class="col-sm-4">
+    <select name="{{ field.label }}" class="form-control minute">
+      {{#each field.choices.minutes }}
+        <option value="{{ this }}" {{ minuteSelected ../toDOM }}>{{this}}</option>
+      {{/each }}
+    </select>
+  </div>
+
+  <div class="col-sm-4">
+    <select name="{{ field.label }}"  class="form-control second">
+      {{#each field.choices.seconds }}
+        <option value="{{this}}" {{ secondSelected ../toDOM }}>{{this}}</option>
+      {{/each }}
+    </select>
+  </div>
+</template>
+
+
+
+<template name="TimeTextInput">
+  <input  name="{{ field.label }}" type="text" class="form-control {{ field.label }}" value="{{ toDOM.getHour }}:{{ toDOM.getMinute }}:{{ toDOM.getSecond }}">
+</template>
