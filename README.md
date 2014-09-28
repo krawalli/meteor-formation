@@ -5,9 +5,11 @@ Form creation package w/ nested models + client and server side validation
 ----------------------------------------------------
 
 
--Before/After validation hooks
--Before/After save hooks
--Endlessly nested models
+<ul>
+<li>Before/After validation hooks</li>
+<li>Before/After save hooks</li>
+<li>Endlessly nested models</li>
+</ul>
 
 
 ###Documentation coming soon
