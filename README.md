@@ -1,7 +1,7 @@
 meteor-formation
 ================
 
-Form creation package w/ nested models + client and server side validation
+Form creation package for Meteor w/ nested models + client and server side validation
 ----------------------------------------------------
 
 
