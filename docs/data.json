@@ -1,0 +1,1020 @@
+{
+    "project": {},
+    "files": {
+        "lib/fields/field/field.js": {
+            "name": "lib/fields/field/field.js",
+            "modules": {
+                "Field": 1
+            },
+            "classes": {
+                "Field": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/modelInstance/modelInstance.js": {
+            "name": "lib/modelInstance/modelInstance.js",
+            "modules": {},
+            "classes": {
+                "ModelInstance": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/modelInstance/modelSuper.js": {
+            "name": "lib/modelInstance/modelSuper.js",
+            "modules": {
+                "ModelInstance": 1
+            },
+            "classes": {
+                "ModelSuper": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/modelInstance/newModelInstance.js": {
+            "name": "lib/modelInstance/newModelInstance.js",
+            "modules": {},
+            "classes": {
+                "NewModelInstance": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/field-instances.js": {
+            "name": "lib/field-instances.js",
+            "modules": {
+                "FieldInstance": 1
+            },
+            "classes": {
+                "FieldInstance": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/models.js": {
+            "name": "lib/models.js",
+            "modules": {
+                "Formation": 1,
+                "Model": 1
+            },
+            "classes": {
+                "Model": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "Formation": {
+            "name": "Formation",
+            "submodules": {
+                "Field": 1,
+                "ModelInstance": 1,
+                "FieldInstance": 1,
+                "Model": 1
+            },
+            "classes": {
+                "Field": 1,
+                "ModelInstance": 1,
+                "ModelSuper": 1,
+                "NewModelInstance": 1,
+                "FieldInstance": 1,
+                "Model": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "lib/models.js",
+            "line": 96,
+            "description": "Generate Forms from JS; for Meteor"
+        },
+        "Field": {
+            "name": "Field",
+            "submodules": {},
+            "classes": {
+                "Field": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "Formation",
+            "namespace": "",
+            "file": "lib/fields/field/field.js",
+            "line": 16,
+            "description": "Field Parent Model; all fields inherit from this"
+        },
+        "ModelInstance": {
+            "name": "ModelInstance",
+            "submodules": {},
+            "classes": {
+                "ModelSuper": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "Formation",
+            "namespace": "",
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 9,
+            "description": "Model Super Class; not usually used by end dev"
+        },
+        "FieldInstance": {
+            "name": "FieldInstance",
+            "submodules": {},
+            "classes": {
+                "FieldInstance": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "Formation",
+            "namespace": "",
+            "file": "lib/field-instances.js",
+            "line": 10,
+            "description": "FieldInstance; does the actual handling and validation of data"
+        },
+        "Model": {
+            "name": "Model",
+            "submodules": {},
+            "classes": {
+                "Model": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "Formation",
+            "namespace": "",
+            "file": "lib/models.js",
+            "line": 96,
+            "description": "Make a Model for a form/DB document to adhere to and validate against"
+        }
+    },
+    "classes": {
+        "Field": {
+            "name": "Field",
+            "shortname": "Field",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Formation",
+            "submodule": "Field",
+            "namespace": "",
+            "file": "lib/fields/field/field.js",
+            "line": 16,
+            "description": "Field Parent Model; all fields inherit from this",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "params",
+                    "description": "{<br />\n                                <b>label</b>:     String [optional]. Label for field,<br />\n                                <b>helpText</b>:  String [optional]. Help text; will often appear as field placeholder,<br />\n                                <b>widget</b>:    String [optional]. Widget name for field; should correspond to a Template[ widget ],<br />\n                                <b>label</b>:     String [optional]. Label for field,<br />\n                                <b>unique</b>:    Boolean [optional]. Ensure value is unique to one ModelInstance / DB document,<br />\n                                <b>min</b>:       Number [optional]. Minimum length / amount of value;  implementation changes based on field data-type,<br />\n                                <b>max</b>:       Number [optional]. Maximum length / amount of value;  implementation changes based on field data-type,<br />\n                                <b>editable</b>:  Function [optional]. Function to determine if user can edit field; runs with FieldInstance context; client-side only,<br />\n                                <b>required</b>:  Boolean [optional]. Is this field required?,<br />\n                                <b>defaultValue</b>:  Number/String/Function [optional]. Default value / function to return default value for FieldInstance,<br />\n                                <b>toDOM</b>:     Function [optional]. Function to transform data in preparation for DOM display,<br />\n                                <b>fromDOM</b>:   Function [optional]. Function to transform data in preparation for DB,<br />\n                              }",
+                    "type": "Object"
+                }
+            ]
+        },
+        "ModelInstance": {
+            "name": "ModelInstance",
+            "shortname": "ModelInstance",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Formation",
+            "namespace": "",
+            "file": "lib/modelInstance/modelInstance.js",
+            "line": 9,
+            "description": "ModelInstance representation of database document; usually created by doing 'new MyModel.instance( data )'; will update, not insert.",
+            "is_constructor": 1,
+            "extends": "ModelSuper",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "Data to create ModelInstance with",
+                    "type": "Object"
+                }
+            ]
+        },
+        "ModelSuper": {
+            "name": "ModelSuper",
+            "shortname": "ModelSuper",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Formation",
+            "submodule": "ModelInstance",
+            "namespace": "",
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 9,
+            "description": "Model Super Class; not usually used by end dev",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "data",
+                    "description": "Data to create ModelInstance with",
+                    "type": "Object"
+                }
+            ]
+        },
+        "NewModelInstance": {
+            "name": "NewModelInstance",
+            "shortname": "NewModelInstance",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Formation",
+            "namespace": "",
+            "file": "lib/modelInstance/newModelInstance.js",
+            "line": 11,
+            "description": "NewModelInstance, a new, unsaved ModelInstance representation of a future database document; usually created by doing 'new MyModel.newInstance( data )'; will insert, not update",
+            "is_constructor": 1,
+            "extends": "ModelSuper",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "Data to create ModelInstance with",
+                    "type": "Object"
+                }
+            ]
+        },
+        "FieldInstance": {
+            "name": "FieldInstance",
+            "shortname": "FieldInstance",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Formation",
+            "submodule": "FieldInstance",
+            "namespace": "",
+            "file": "lib/field-instances.js",
+            "line": 10,
+            "description": "FieldInstance; does the actual handling and validation of data",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "String/Number/Date"
+                }
+            ]
+        },
+        "Model": {
+            "name": "Model",
+            "shortname": "Model",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Formation",
+            "submodule": "Model",
+            "namespace": "",
+            "file": "lib/models.js",
+            "line": 96,
+            "description": "Make a Model for a form/DB document to adhere to and validate against",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "params",
+                    "description": "{ <br />\n                             <b>collection</b>: Mongo.Collection,<br />\n                             <b>schema</b>: Object, determines data structure for your model, and is generally made up of Fields,<br />\n                             <b>virtualFields</b>: [ functions ] [optional],  array of functions to include in ModelInstances that manipulate data of actual fields and return something;<br />\n                             <b>beforeValidation</b>: function [optional],  function to run before ModelInstance validates,<br />\n                             <b>afterValidation</b>: function [optional],  function to run after ModelInstance validates,<br />\n                             <b>beforeSave</b>: function [optional],  function to run before ModelInstance saves,<br />\n                             <b>afterSave</b>: function [optional],  function to run after ModelInstance saves,<br />\n                             <b>modelValidator</b>: function [optional],  function to run after each field validates, before saving; returns a pattern (i.e. Match.Where);  used to run extra validation functions on model as a whole<br />\n                             <b>filter</b>:  Object/Function [optional],  object/function to add to filter passed into Model.find() or Model.findOne()<br />\n                           }",
+                    "type": "Object"
+                }
+            ]
+        }
+    },
+    "classitems": [
+        {
+            "file": "lib/fields/field/field.js",
+            "line": 50,
+            "description": "Label for field",
+            "itemtype": "property",
+            "name": "label",
+            "type": "String",
+            "class": "Field",
+            "module": "Formation",
+            "submodule": "Field"
+        },
+        {
+            "file": "lib/fields/field/field.js",
+            "line": 57,
+            "description": "Help text",
+            "itemtype": "property",
+            "name": "helpText",
+            "type": "String",
+            "class": "Field",
+            "module": "Formation",
+            "submodule": "Field"
+        },
+        {
+            "file": "lib/fields/field/field.js",
+            "line": 64,
+            "description": "Widget name",
+            "itemtype": "property",
+            "name": "widget",
+            "type": "String",
+            "class": "Field",
+            "module": "Formation",
+            "submodule": "Field"
+        },
+        {
+            "file": "lib/fields/field/field.js",
+            "line": 71,
+            "description": "Value unique to document",
+            "itemtype": "property",
+            "name": "unique",
+            "type": "Boolean",
+            "class": "Field",
+            "module": "Formation",
+            "submodule": "Field"
+        },
+        {
+            "file": "lib/fields/field/field.js",
+            "line": 78,
+            "description": "Minimum length / amount",
+            "itemtype": "property",
+            "name": "min",
+            "type": "Number",
+            "class": "Field",
+            "module": "Formation",
+            "submodule": "Field"
+        },
+        {
+            "file": "lib/fields/field/field.js",
+            "line": 85,
+            "description": "Maximum length / amount",
+            "itemtype": "property",
+            "name": "max",
+            "type": "Number",
+            "class": "Field",
+            "module": "Formation",
+            "submodule": "Field"
+        },
+        {
+            "file": "lib/fields/field/field.js",
+            "line": 92,
+            "description": "Check to see if field is editable by user; client-side only",
+            "itemtype": "method",
+            "name": "editable",
+            "return": {
+                "description": "Boolean"
+            },
+            "class": "Field",
+            "module": "Formation",
+            "submodule": "Field"
+        },
+        {
+            "file": "lib/fields/field/field.js",
+            "line": 99,
+            "description": "Is this field required?",
+            "itemtype": "property",
+            "name": "required",
+            "type": "Boolean",
+            "class": "Field",
+            "module": "Formation",
+            "submodule": "Field"
+        },
+        {
+            "file": "lib/fields/field/field.js",
+            "line": 106,
+            "description": "Get default value for field",
+            "itemtype": "method",
+            "name": "defaultValue",
+            "return": {
+                "description": "",
+                "type": "String/Number/Array/Date"
+            },
+            "class": "Field",
+            "module": "Formation",
+            "submodule": "Field"
+        },
+        {
+            "file": "lib/fields/field/field.js",
+            "line": 116,
+            "description": "Function to prepare data for DOM display",
+            "itemtype": "method",
+            "name": "toDOM",
+            "return": {
+                "description": "Object/String/Number"
+            },
+            "class": "Field",
+            "module": "Formation",
+            "submodule": "Field"
+        },
+        {
+            "file": "lib/fields/field/field.js",
+            "line": 123,
+            "description": "Function to prepare data for DB entry",
+            "itemtype": "method",
+            "name": "fromDOM",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "prepare/transform data from DOM for DB entry"
+                }
+            ],
+            "return": {
+                "description": "Object/String/Number"
+            },
+            "class": "Field",
+            "module": "Formation",
+            "submodule": "Field"
+        },
+        {
+            "file": "lib/modelInstance/modelInstance.js",
+            "line": 38,
+            "description": "Delete documents from DB",
+            "itemtype": "method",
+            "name": "delete",
+            "class": "ModelInstance",
+            "module": "Formation"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 55,
+            "description": "Model that instance was instantiated from",
+            "itemtype": "property",
+            "name": "_model",
+            "type": "Model",
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 62,
+            "description": "Passed in summary of model",
+            "itemtype": "method",
+            "name": "summary",
+            "return": {
+                "description": "String"
+            },
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 69,
+            "description": "Passed in beforeSave hook of model",
+            "itemtype": "method",
+            "name": "beforeSave",
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 75,
+            "description": "Passed in afterSave hook of model",
+            "itemtype": "method",
+            "name": "afterSave",
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 81,
+            "description": "Passed in beforeValidation hook of model",
+            "itemtype": "method",
+            "name": "beforeValidation",
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 87,
+            "description": "Passed in afterValidation hook of model",
+            "itemtype": "method",
+            "name": "afterValidation",
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 93,
+            "description": "Passed in modelValidator hook of model",
+            "itemtype": "method",
+            "name": "modelValidator",
+            "return": {
+                "description": "Match.Where"
+            },
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 100,
+            "description": "Check to see if model is editable by user; client-side only",
+            "itemtype": "method",
+            "name": "editable",
+            "return": {
+                "description": "Boolen"
+            },
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 107,
+            "description": "If model is editable by user, toggle editMode",
+            "itemtype": "method",
+            "name": "editMode",
+            "params": [
+                {
+                    "name": "boo",
+                    "description": "[optional]",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "Boolean"
+            },
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 135,
+            "description": "Returns current state of editMode",
+            "itemtype": "method",
+            "name": "inEditMode",
+            "return": {
+                "description": "Boolean"
+            },
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 146,
+            "description": "Model-level errors (as opposed to field-level errors)",
+            "itemtype": "method",
+            "name": "errors",
+            "return": {
+                "description": "Array"
+            },
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 157,
+            "description": "All errors, field and model-level",
+            "itemtype": "method",
+            "name": "getAllErrors",
+            "return": {
+                "description": "Object"
+            },
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 194,
+            "description": "If model has errors field or model-level, return true; else false",
+            "itemtype": "method",
+            "name": "hasErrors",
+            "return": {
+                "description": "Boolean"
+            },
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 226,
+            "description": "Return object of fields only, limited to fields preset in model",
+            "itemtype": "method",
+            "name": "fields",
+            "return": {
+                "description": "Object"
+            },
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 242,
+            "description": "Return array of fields",
+            "itemtype": "method",
+            "name": "fieldsArray",
+            "return": {
+                "description": "Array"
+            },
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 253,
+            "description": "If instance is NewModelInstance, return true; else false",
+            "itemtype": "method",
+            "name": "isNew",
+            "return": {
+                "description": "Boolean"
+            },
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 264,
+            "description": "Save to database; returns number of docs changed (either 1 on success or 0 on fail)",
+            "itemtype": "method",
+            "name": "save",
+            "return": {
+                "description": "Number"
+            },
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 298,
+            "description": "Return plain JavaScript object with values.  Blank, non-required values and their fields are not included",
+            "itemtype": "method",
+            "name": "getValue",
+            "return": {
+                "description": "Object"
+            },
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/modelInstance/modelSuper.js",
+            "line": 347,
+            "description": "Validate instance; returns undefined on success; throws errors on failure",
+            "itemtype": "method",
+            "name": "validate",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "class": "ModelSuper",
+            "module": "Formation",
+            "submodule": "ModelInstance"
+        },
+        {
+            "file": "lib/field-instances.js",
+            "line": 20,
+            "description": "Actual value of field",
+            "itemtype": "property",
+            "name": "value",
+            "class": "FieldInstance",
+            "module": "Formation",
+            "submodule": "FieldInstance"
+        },
+        {
+            "file": "lib/field-instances.js",
+            "line": 45,
+            "description": "Field that this instance refers to",
+            "itemtype": "property",
+            "name": "field",
+            "type": "Field",
+            "class": "FieldInstance",
+            "module": "Formation",
+            "submodule": "FieldInstance"
+        },
+        {
+            "file": "lib/field-instances.js",
+            "line": 52,
+            "description": "Function to prepare data for DOM display",
+            "itemtype": "method",
+            "name": "toDOM",
+            "return": {
+                "description": "Object/String/Number"
+            },
+            "class": "FieldInstance",
+            "module": "Formation",
+            "submodule": "FieldInstance"
+        },
+        {
+            "file": "lib/field-instances.js",
+            "line": 59,
+            "description": "Function to prepare data for DB entry",
+            "itemtype": "method",
+            "name": "fromDOM",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "prepare/transform data from DOM for DB entry"
+                }
+            ],
+            "return": {
+                "description": "Object/String/Number"
+            },
+            "class": "FieldInstance",
+            "module": "Formation",
+            "submodule": "FieldInstance"
+        },
+        {
+            "file": "lib/field-instances.js",
+            "line": 67,
+            "description": "For file upload field; File path relative to bucket",
+            "itemtype": "property",
+            "name": "uploadTo",
+            "type": "String",
+            "class": "FieldInstance",
+            "module": "Formation",
+            "submodule": "FieldInstance"
+        },
+        {
+            "file": "lib/field-instances.js",
+            "line": 75,
+            "description": "Name of template widget to use for display",
+            "itemtype": "property",
+            "name": "widget",
+            "type": "String",
+            "class": "FieldInstance",
+            "module": "Formation",
+            "submodule": "FieldInstance"
+        },
+        {
+            "file": "lib/field-instances.js",
+            "line": 82,
+            "description": "Check to see if field is editable by user; client-side only",
+            "itemtype": "method",
+            "name": "editable",
+            "return": {
+                "description": "Boolen"
+            },
+            "class": "FieldInstance",
+            "module": "Formation",
+            "submodule": "FieldInstance"
+        },
+        {
+            "file": "lib/field-instances.js",
+            "line": 90,
+            "description": "If field is editable by user, toggle editMode",
+            "itemtype": "method",
+            "name": "editMode",
+            "params": [
+                {
+                    "name": "boo",
+                    "description": "[optional]",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "Boolean"
+            },
+            "class": "FieldInstance",
+            "module": "Formation",
+            "submodule": "FieldInstance"
+        },
+        {
+            "file": "lib/field-instances.js",
+            "line": 112,
+            "description": "Returns current state of editMode",
+            "itemtype": "method",
+            "name": "inEditMode",
+            "return": {
+                "description": "Boolean"
+            },
+            "class": "FieldInstance",
+            "module": "Formation",
+            "submodule": "FieldInstance"
+        },
+        {
+            "file": "lib/field-instances.js",
+            "line": 123,
+            "description": "Field-level errors",
+            "itemtype": "method",
+            "name": "errors",
+            "return": {
+                "description": "Array"
+            },
+            "class": "FieldInstance",
+            "module": "Formation",
+            "submodule": "FieldInstance"
+        },
+        {
+            "file": "lib/field-instances.js",
+            "line": 133,
+            "description": "Validate instance; returns undefined on success; errors are caught and stored in _errors",
+            "itemtype": "method",
+            "name": "validate",
+            "class": "FieldInstance",
+            "module": "Formation",
+            "submodule": "FieldInstance"
+        },
+        {
+            "file": "lib/field-instances.js",
+            "line": 151,
+            "description": "If field has errors, return true; else false",
+            "itemtype": "method",
+            "name": "hasErrors",
+            "return": {
+                "description": "Boolean"
+            },
+            "class": "FieldInstance",
+            "module": "Formation",
+            "submodule": "FieldInstance"
+        },
+        {
+            "file": "lib/field-instances.js",
+            "line": 162,
+            "description": "Return plain JavaScript value",
+            "itemtype": "method",
+            "name": "getValue",
+            "return": {
+                "description": "Object"
+            },
+            "class": "FieldInstance",
+            "module": "Formation",
+            "submodule": "FieldInstance"
+        },
+        {
+            "file": "lib/models.js",
+            "line": 115,
+            "description": "Mongo.Collection object",
+            "itemtype": "property",
+            "name": "collection",
+            "type": "Mongo.Collection",
+            "class": "Model",
+            "module": "Formation",
+            "submodule": "Model"
+        },
+        {
+            "file": "lib/models.js",
+            "line": 123,
+            "description": "If model is array, number of extra new instances to create",
+            "itemtype": "property",
+            "name": "extra",
+            "type": "Number",
+            "class": "Model",
+            "module": "Formation",
+            "submodule": "Model"
+        },
+        {
+            "file": "lib/models.js",
+            "line": 131,
+            "description": "If model is array, is it required?",
+            "itemtype": "property",
+            "name": "required",
+            "type": "Boolean",
+            "class": "Model",
+            "module": "Formation",
+            "submodule": "Model"
+        },
+        {
+            "file": "lib/models.js",
+            "line": 139,
+            "description": "Developer-set function to determine if model is editable by user;  client-side only.\n Context of the function you pass in will be a ModelInstance (i.e. use this.<field>.value to access fields values );",
+            "itemtype": "method",
+            "name": "editable",
+            "type": "Function",
+            "class": "Model",
+            "module": "Formation",
+            "submodule": "Model"
+        },
+        {
+            "file": "lib/models.js",
+            "line": 148,
+            "description": "Object containing beforeSave, afterSave, beforeValidation, afterValidation, and modelValidator hooks.\n Context of the function you pass in will be a ModelInstance (i.e. use this.<field>.value to access fields values );",
+            "itemtype": "property",
+            "name": "hooks",
+            "type": "Object",
+            "class": "Model",
+            "module": "Formation",
+            "submodule": "Model"
+        },
+        {
+            "file": "lib/models.js",
+            "line": 157,
+            "description": "Developer-set function to return a summary string of model instances of this model.\n Context of the function you pass in will be a ModelInstance (i.e. use this.<field>.value to access fields values );",
+            "itemtype": "method",
+            "name": "summary",
+            "type": "Function",
+            "class": "Model",
+            "module": "Formation",
+            "submodule": "Model"
+        },
+        {
+            "file": "lib/models.js",
+            "line": 174,
+            "description": "Array of functions to manipulate instance data and return it as if it were a real ModelInstance field.\n Context of the function you pass in will be a ModelInstance (i.e. use this.<field>.value to access fields values );",
+            "itemtype": "property",
+            "name": "virtualFields",
+            "type": "Array",
+            "class": "Model",
+            "module": "Formation",
+            "submodule": "Model"
+        },
+        {
+            "file": "lib/models.js",
+            "line": 183,
+            "description": "Find DB Objects; Same as collection.find().fetch(), but returns ModelInstances instead of plain objects",
+            "itemtype": "method",
+            "name": "find",
+            "params": [
+                {
+                    "name": "Selector",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "Options",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Returns an array of ModelInstances, not a cursor; you can access the raw DB objects by using Model.collecton.find()",
+                "type": "Array"
+            },
+            "class": "Model",
+            "module": "Formation",
+            "submodule": "Model"
+        },
+        {
+            "file": "lib/models.js",
+            "line": 219,
+            "description": "Find One DB Object; Same as collection.findOne(), but returns a ModelInstance instead of a plain object",
+            "itemtype": "method",
+            "name": "findOne",
+            "params": [
+                {
+                    "name": "Selector",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "Options",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Returns a single ModelInstances or undefined; you can access the raw DB objects by using Model.collecton.findOne()",
+                "type": "ModelInstance"
+            },
+            "class": "Model",
+            "module": "Formation",
+            "submodule": "Model"
+        },
+        {
+            "file": "lib/models.js",
+            "line": 254,
+            "description": "Create a new ModelInstance (i.e. an instance to update, not insert);  must use \"new\" keyword",
+            "itemtype": "method",
+            "name": "instance",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "data",
+                    "description": "data to create ModelInstance with",
+                    "type": "Object"
+                }
+            ],
+            "class": "Model",
+            "module": "Formation",
+            "submodule": "Model"
+        },
+        {
+            "file": "lib/models.js",
+            "line": 262,
+            "description": "Create a new NewModelInstance (i.e. an instance to insert, not update);  must use \"new\" keyword",
+            "itemtype": "method",
+            "name": "newInstance",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "data",
+                    "description": "data to create NewModelInstance with",
+                    "type": "Object"
+                }
+            ],
+            "class": "Model",
+            "module": "Formation",
+            "submodule": "Model"
+        }
+    ],
+    "warnings": []
+}

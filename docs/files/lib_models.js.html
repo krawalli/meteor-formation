@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib/models.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/Field.html">Field</a></li>
+            
+                <li><a href="../classes/FieldInstance.html">FieldInstance</a></li>
+            
+                <li><a href="../classes/Model.html">Model</a></li>
+            
+                <li><a href="../classes/ModelInstance.html">ModelInstance</a></li>
+            
+                <li><a href="../classes/ModelSuper.html">ModelSuper</a></li>
+            
+                <li><a href="../classes/NewModelInstance.html">NewModelInstance</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Field.html">Field</a></li>
+            
+                <li><a href="../modules/FieldInstance.html">FieldInstance</a></li>
+            
+                <li><a href="../modules/Formation.html">Formation</a></li>
+            
+                <li><a href="../modules/Model.html">Model</a></li>
+            
+                <li><a href="../modules/ModelInstance.html">ModelInstance</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: lib/models.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+* Generate Forms from JS; for Meteor
+* @module Formation
+*/
+
+var err = function( message ){
+  throw new Error( message );
+};
+
+
+toTitleCase = function( string ){
+  var smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|vs?\.?|via)$/i;
+
+  return string.replace( /[A-Za-z0-9\u00C0-\u00FF]+[^\s-]*/g, function( match, index, title ){
+    if ( index &gt; 0 &amp;&amp; index + match.length !== title.length &amp;&amp;
+         match.search( smallWords ) &gt; -1 &amp;&amp; title.charAt( index - 2 ) !== &quot;:&quot; &amp;&amp;
+         ( title.charAt( index + match.length ) !== &#x27;-&#x27; || title.charAt( index - 1 ) === &#x27;-&#x27; ) &amp;&amp;
+         title.charAt( index - 1 ).search( /[^\s-]/ ) &lt; 0 ) {
+      return match.toLowerCase();
+    }
+
+    if ( match.substr( 1 ).search( /[A-Z]|\../ ) &gt; -1 ) {
+      return match;
+    }
+
+    return match.charAt( 0 ).toUpperCase() + match.substr( 1 );
+  });
+};
+
+camelToTitleCase = function( string ) {
+    var i, str, lowers, uppers;
+    var str = string.split( /(?=[A-Z])/ );
+    for ( var j=0; j &lt; str.length; j++ ){
+      str[ j ] = toTitleCase( str[ j ] );
+    }
+    str = str.join( &quot; &quot; );
+
+    // Certain minor words should be left lowercase unless
+    // they are the first or last words in the string
+    lowers = [&#x27;A&#x27;, &#x27;An&#x27;, &#x27;The&#x27;, &#x27;And&#x27;, &#x27;But&#x27;, &#x27;Or&#x27;, &#x27;For&#x27;, &#x27;Nor&#x27;, &#x27;As&#x27;, &#x27;At&#x27;,
+    &#x27;By&#x27;, &#x27;For&#x27;, &#x27;From&#x27;, &#x27;In&#x27;, &#x27;Into&#x27;, &#x27;Near&#x27;, &#x27;Of&#x27;, &#x27;On&#x27;, &#x27;Onto&#x27;, &#x27;To&#x27;, &#x27;With&#x27;];
+    for (i = 0; i &lt; lowers.length; i++)
+        str = str.replace( new RegExp(&#x27;\\s&#x27; + lowers[i] + &#x27;\\s&#x27;, &#x27;g&#x27; ),
+            function( txt ) {
+                return txt.toLowerCase();
+            });
+
+    // Certain words such as initialisms or acronyms should be left uppercase
+    uppers = [ &#x27;Id&#x27;, &#x27;Tv&#x27; ];
+    for ( i = 0; i &lt; uppers.length; i++ )
+        str = str.replace( new RegExp(&#x27;\\b&#x27; + uppers[i] + &#x27;\\b&#x27;, &#x27;g&#x27; ),
+            uppers[ i ].toUpperCase());
+
+    return str;
+};
+
+
+/**
+* @module Formation
+* @submodule Model
+*/
+
+Formation.Model = function( params ){
+  var self = this;
+  if ( typeof params === &quot;function&quot; ) params = new params;
+
+  _.each( params.schema, function( field, key ){
+    if (! field.label &amp;&amp; field instanceof Formation.Field ){
+      Object.defineProperty( field, &quot;label&quot;, { value: camelToTitleCase( key ) } );
+    }
+  });
+
+
+  // assemble query filter
+  var filter;
+  switch ( typeof( params.filter ) ){
+  case &#x27;undefined&#x27;:
+    filter = function(){ return {}; };
+    break;
+  case &#x27;object&#x27;:
+    filter = function(){ return params.filter; };
+    break;
+  case &#x27;function&#x27;:
+    filter = params.filter;
+    break;
+  }
+
+  var hooks = {};
+  hooks.beforeSave = typeof( params.beforeSave ) === &#x27;function&#x27; || typeof( params.beforeSave ) === &#x27;undefined&#x27; ? params.beforeSave : err( &quot;beforeSave hook must be a function&quot; );
+  hooks.afterSave = typeof( params.afterSave ) === &#x27;function&#x27; || typeof( params.afterSave ) === &#x27;undefined&#x27; ? params.afterSave : err( &quot;afterSave hook must be a function&quot; );
+  hooks.beforeValidation = typeof( params.beforeValidation ) === &#x27;function&#x27; || typeof( params.beforeValidation ) === &#x27;undefined&#x27; ? params.beforeValidation : err( &quot;beforeValidation hook must be a function&quot; );
+  hooks.afterValidation = typeof( params.afterValidation ) === &#x27;function&#x27; || typeof( params.afterValidation ) === &#x27;undefined&#x27; ? params.afterValidation : err( &quot;afterValidation hook must be a function&quot; );
+  hooks.modelValidator = typeof( params.modelValidator ) === &#x27;function&#x27; || typeof( params.modelValidator ) === &#x27;undefined&#x27; ? params.modelValidator : err( &quot;modelValidator hook must be a function&quot; );
+
+
+  /**
+  * Make a Model for a form/DB document to adhere to and validate against
+  * @class Model
+  * @constructor
+  * @param {Object} params  { &lt;br /&gt;
+                              &lt;b&gt;collection&lt;/b&gt;: Mongo.Collection,&lt;br /&gt;
+                              &lt;b&gt;schema&lt;/b&gt;: Object, determines data structure for your model, and is generally made up of Fields,&lt;br /&gt;
+                              &lt;b&gt;virtualFields&lt;/b&gt;: [ functions ] [optional],  array of functions to include in ModelInstances that manipulate data of actual fields and return something;&lt;br /&gt;
+                              &lt;b&gt;beforeValidation&lt;/b&gt;: function [optional],  function to run before ModelInstance validates,&lt;br /&gt;
+                              &lt;b&gt;afterValidation&lt;/b&gt;: function [optional],  function to run after ModelInstance validates,&lt;br /&gt;
+                              &lt;b&gt;beforeSave&lt;/b&gt;: function [optional],  function to run before ModelInstance saves,&lt;br /&gt;
+                              &lt;b&gt;afterSave&lt;/b&gt;: function [optional],  function to run after ModelInstance saves,&lt;br /&gt;
+                              &lt;b&gt;modelValidator&lt;/b&gt;: function [optional],  function to run after each field validates, before saving; returns a pattern (i.e. Match.Where);  used to run extra validation functions on model as a whole&lt;br /&gt;
+                              &lt;b&gt;filter&lt;/b&gt;:  Object/Function [optional],  object/function to add to filter passed into Model.find() or Model.findOne()&lt;br /&gt;
+                            }
+  */
+  function Model(){}
+
+  Object.defineProperties( Model.prototype, {
+    /**
+    * Mongo.Collection object
+    * @property collection
+    * @type Mongo.Collection
+    */
+    collection: { value: params.collection instanceof Meteor.Collection || typeof( params.collection ) === &#x27;undefined&#x27; ? params.collection : err( &quot;Please enter a Meteor Collection for instances of Formation.Model&quot; ) },
+
+
+    /**
+    * If model is array, number of extra new instances to create
+    * @property extra
+    * @type Number
+    */
+    extra: { value: typeof( params.extra ) === &quot;number&quot; ? params.extra : 1 },
+
+
+    /**
+    * If model is array, is it required?
+    * @property required
+    * @type Boolean
+    */
+    required: { value: typeof( params.required ) === &quot;boolean&quot; ? params.required : true },
+
+
+    /**
+    * Developer-set function to determine if model is editable by user;  client-side only.
+    *  Context of the function you pass in will be a ModelInstance (i.e. use this.&lt;field&gt;.value to access fields values );
+    * @method editable
+    * @type Function
+    */
+    editable: { value: typeof params.editable === &#x27;boolean&#x27; || typeof params.editable === &#x27;function&#x27; ? params.editable : true },
+
+
+    /**
+    * Object containing beforeSave, afterSave, beforeValidation, afterValidation, and modelValidator hooks.
+    *  Context of the function you pass in will be a ModelInstance (i.e. use this.&lt;field&gt;.value to access fields values );
+    * @property hooks
+    * @type Object
+    */
+    hooks: { value: hooks },
+
+
+    /**
+    * Developer-set function to return a summary string of model instances of this model.
+    *  Context of the function you pass in will be a ModelInstance (i.e. use this.&lt;field&gt;.value to access fields values );
+    * @method summary
+    * @type Function
+    */
+    summary: { value: typeof( params.summary ) === &#x27;function&#x27; ? params.summary : function(){ return &#x27;un-summarized model&#x27;; } },
+    filter: { value: filter },
+    fieldsFilter: { value: function(){
+        return _.reduce( _.keys( this ), function( memo, value ){
+          memo[ value ] = 1;
+          return memo;
+        }, {} );
+      }
+    },
+
+
+    /**
+    * Array of functions to manipulate instance data and return it as if it were a real ModelInstance field.
+    *  Context of the function you pass in will be a ModelInstance (i.e. use this.&lt;field&gt;.value to access fields values );
+    * @property virtualFields
+    * @type Array
+    */
+    virtualFields: { value: ( params.virtualFields instanceof Object ) &amp;&amp; ! ( params.virtualFields instanceof Array ) ? params.virtualFields : {} },
+
+
+    /**
+    * Find DB Objects; Same as collection.find().fetch(), but returns ModelInstances instead of plain objects
+    * @method find
+    * @param {Object} Selector
+    * @param {Object} Options
+    * @return {Array}           Returns an array of ModelInstances, not a cursor; you can access the raw DB objects by using Model.collecton.find()
+    */
+    find: { value: function( filter, options ){
+        var protoself = this;
+
+        var filter = filter || {};
+        _.extend( filter, protoself.filter() );
+        var options = options || {};
+        _.extend( options, { fields: this.fieldsFilter() } );
+
+        collectionObjects = this.collection.find( filter, options ).fetch();
+
+        for ( var i=0; i &lt; collectionObjects.length; i++ ){
+          for ( field in protoself ){
+            if ( protoself[ field ] instanceof Array &amp;&amp; typeof( collectionObjects[ i ][ field ] ) === &quot;undefined&quot; ){
+              collectionObjects[ i ][ field ] = [];
+            }
+          }
+        }
+
+        instances = [];
+        for ( collectionObject in collectionObjects ){
+          var instance = new protoself.instance( collectionObjects[ collectionObject ] );
+          instances.push( instance );
+        }
+
+        return instances;
+      }
+    },
+
+
+    /**
+    * Find One DB Object; Same as collection.findOne(), but returns a ModelInstance instead of a plain object
+    * @method findOne
+    * @param {Object} Selector
+    * @param {Object} Options
+    * @return {ModelInstance}     Returns a single ModelInstances or undefined; you can access the raw DB objects by using Model.collecton.findOne()
+    */
+    findOne: { value: function( filter, options ){
+        var protoself = this;
+
+        filter = filter || {};
+        _.extend( filter, protoself.filter() );
+        options = options || {};
+        _.extend( options, { fields: this.fieldsFilter() } );
+        var collectionObject = protoself.collection.findOne( filter, options );
+
+        var instance;
+        if ( collectionObject ){
+          for ( field in protoself ){
+            if ( protoself[ field ] instanceof Array &amp;&amp; typeof( collectionObject[ field ] ) === &quot;undefined&quot; ){
+              collectionObject[ field ] = [];
+            }
+          }
+
+          instance = new protoself.instance( collectionObject );
+        }
+
+        return instance;
+      }
+    }
+  });
+
+  var model = new Model;
+  Object.defineProperties( Model.prototype, {
+
+    /**
+    * Create a new ModelInstance (i.e. an instance to update, not insert);  must use &quot;new&quot; keyword
+    * @method instance
+    * @constructor
+    * @param {Object} data    data to create ModelInstance with
+    */
+    instance: { value: Formation.ModelInstance({ model: model }) },
+
+    /**
+    * Create a new NewModelInstance (i.e. an instance to insert, not update);  must use &quot;new&quot; keyword
+    * @method newInstance
+    * @constructor
+    * @param {Object} data    data to create NewModelInstance with
+    */
+    newInstance: { value: Formation.NewModelInstance({ model: model }) }
+  });
+
+
+  var schema = params.schema || err( &#x27;Please add a schema to this model&#x27; );
+  for ( field in schema ){
+    Object.defineProperty( model, field, { value: schema[ field ], enumerable: true });
+  }
+
+  return model;
+};
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
