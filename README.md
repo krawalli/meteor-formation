@@ -11,5 +11,5 @@ Form creation package for Meteor w/ nested models + client and server side valid
 <li>Endlessly nested models</li>
 </ul>
 
-
-###Documentation coming soon
+###Live Demo here:  http://formation.meteor.com/
+###Reference Documentation here:  http://quietcreep.github.io/meteor-formation/
