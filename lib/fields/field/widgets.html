@@ -26,7 +26,7 @@
 
 
 <template name="dxSelectChoice">
-		{{# each field.choices }}
+		{{# each choices }}
 			<option value="{{# if _id }}{{ _id }}{{ else }}{{ this }}{{/if}}" {{ selected ../value }}>
 				{{# if summary }}
 					{{ summary }}
@@ -38,7 +38,7 @@
 </template>
 
 <template name="dxCheckboxChoice">
-	{{# each field.choices }}
+	{{# each choices }}
 		<div class="checkbox form-control {{ field.label }}">
 			<label for="{{ ../name }}" class="{{ ../label }}">
 				<input type="checkbox" name="{{ ../label }}" value="{{# if _id }}{{ _id }}{{ else }}{{ this }}{{/if}}" class="form-control {{ ../label }}" {{ checked ../value }}>
@@ -50,7 +50,7 @@
 
 
 <template name="dxRadioChoice">
-	{{# each field.choices }}
+	{{# each choices }}
 		<div class="radio">
 			<label for="{{ ../field.label }}" class="{{ ../field.label }}">
 				<input type="radio" name="{{ ../field.label }}" value="{{# if _id }}{{ _id }}{{ else }}{{ this }}{{/if}}" {{ checked ../value }}>
