@@ -14,7 +14,7 @@
 <template name="dxArray">
   {{# each instances }}
     {{> UI.contentBlock this }}
-    {{ _parent .. }}
+    {{ _dxParent .. }}
   {{/ each }}
 
   {{# if model.inEditMode }}
