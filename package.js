@@ -20,12 +20,10 @@ Package.onUse( function( api ) {
   api.use( [ 'templating', 'ui' ], 'client' );
   api.use( [ 'jparker:crypto-sha256@0.1.0', 'jparker:crypto-hmac@0.1.0', 'jparker:crypto-core@0.1.0', 'jparker:crypto-base64@0.1.0' ], both );
 
-
   //// settings and setup ///////////
   api.addFiles( 'settings.js', both );
   api.addFiles( 'lib/s3-methods.js', both );
   api.addFiles( 'server/s3.js', 'server' );
-
 
   //// fields ///////////////////////
   var fields = [
@@ -66,14 +64,13 @@ Package.onUse( function( api ) {
   api.addFiles( 'lib/modelInstance/modelInstance.js', both );
   api.addFiles( 'lib/modelInstance/newModelInstance.js', both );
 
-
   api.export( 'Formation' );
 
 });
 
 
 Package.onTest( function( api ) {
-  api.use( 'tinytest' );
-  api.use( 'quietcreep:formation' );
-  api.addFiles( 'quietcreep:formation-tests.js' );
+  // api.use( 'tinytest' );
+  // api.use( 'quietcreep:formation' );
+  // api.addFiles( 'quietcreep:formation-tests.js' );
 });
