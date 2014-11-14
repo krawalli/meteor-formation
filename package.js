@@ -11,8 +11,8 @@ Package.onUse( function( api ) {
 
   var both = [ 'client', 'server' ];
 
-  api.use([ 'quietcreep:formation-core@1.0.3', 'quietcreep:formation-blaze-widgets@1.0.3' ]);
-  api.imply([ 'quietcreep:formation-core@1.0.3', 'quietcreep:formation-blaze-widgets@1.0.3' ]);
+  api.use([ 'quietcreep:formation-core@1.0.3_1', 'quietcreep:formation-blaze-widgets@1.0.3' ]);
+  api.imply([ 'quietcreep:formation-core@1.0.3_1', 'quietcreep:formation-blaze-widgets@1.0.3' ]);
 });
 
 
