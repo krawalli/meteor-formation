@@ -1,7 +1,7 @@
 Package.describe({
   name: "quietcreep:formation",
   summary: "Slender form creation w/ client & server side validation",
-  version: "1.0.3",
+  version: "1.0.3_1",
   git: "http://github.com/quietcreep/meteor-formation"
 });
 
