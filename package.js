@@ -1,7 +1,7 @@
 Package.describe({
   name: "quietcreep:formation",
   summary: "Slender form creation w/ client & server side validation",
-  version: "1.0.3_3",
+  version: "1.0.3_4",
   git: "http://github.com/quietcreep/meteor-formation"
 });
 
@@ -11,8 +11,8 @@ Package.onUse( function( api ) {
 
   var both = [ 'client', 'server' ];
 
-  api.use([ 'quietcreep:formation-core@1.0.3_3', 'quietcreep:formation-blaze-widgets@1.0.3' ]);
-  api.imply([ 'quietcreep:formation-core@1.0.3_3', 'quietcreep:formation-blaze-widgets@1.0.3' ]);
+  api.use([ 'quietcreep:formation-core@1.0.3_4', 'quietcreep:formation-blaze-widgets@1.0.3' ]);
+  api.imply([ 'quietcreep:formation-core@1.0.3_4', 'quietcreep:formation-blaze-widgets@1.0.3' ]);
 });
 
 
