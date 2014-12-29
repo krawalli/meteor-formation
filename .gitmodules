@@ -1,6 +1,0 @@
-[submodule "formation-blaze-widgets"]
-	path = formation-blaze-widgets
-	url = https://github.com/quietcreep/formation-blaze-widgets
-[submodule "formation-core"]
-	path = formation-core
-	url = https://github.com/quietcreep/formation-core
