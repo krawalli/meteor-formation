@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>FieldInstance - quietcreep-formation</title>
+    <title>../quietcreep:formation-core/models/modelInstance.js - quietcreep-formation</title>
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -98,40 +98,63 @@
                 <div id="docs-main">
                     <div class="content">
                         <div class="page-header">
-                            <h1>FieldInstance <small>Module</small></h1>
+                            <h1>../quietcreep:formation-core/models/modelInstance.js <small>File</small></h1>
                         </div>
                         
-                        <div class="clearfix well well-small">
+                        <div class="file">
+                            <pre class="prettyprint linenums">
                         
                         
-                                <div class="foundat">
-                                    Defined in: <a href="../files/.._quietcreep:formation-core_fields_fieldInstance.js.html#l10"><code>..&#x2F;quietcreep:formation-core&#x2F;fields&#x2F;fieldInstance.js:10</code></a>
-                                </div>
+                        Formation.ModelInstance = function( params ){
                         
-                        </div>
+                          params.__name__ = &quot;ModelInstance&quot;;
                         
+                          var superinstance = ModelInstanceSuper( params );
                         
-                        <div class="moduledesc well well-small">
-                            <p>FieldInstance; does the actual handling and validation of data</p>
+                          /**
+                          * ModelInstance representation of database document; usually created by doing &#x27;new MyModel.instance( data )&#x27;; will update, not insert.
+                          * @class ModelInstance
+                          * @constructor
+                          * @extends ModelSuper
+                          * @param {Object} data      Data to create ModelInstance with
+                          */
+                          function ModelInstance( data ){
+                            var data = arguments[ 0 ] || {};
                         
-                        </div>
+                            Object.defineProperty( this, &#x27;_editMode&#x27;, {
+                              value: new ReactiveVar( false ),
+                              writable: true,
+                              enumerable: false
+                            });
+                            superinstance.call( this, data );
                         
+                            // add _id as unwritable, non-enumerable property
+                            if ( this._model.collection ){
+                              Object.defineProperty( this, &quot;_id&quot;, {
+                                value: data._id,
+                                enumerable: false
+                              });
+                            }
+                          }
                         
-                        <div class="yui3-g">
-                            <div class="yui3-u-1-2">
-                                    <p>This module provides the following classes:</p>
+                          ModelInstance.prototype = Object.create( superinstance.prototype );
                         
-                                    <ul class="module-classes">
-                                        <li class="module-class">
-                                            <a href="../classes/FieldInstance.html">
-                                                FieldInstance
-                                            </a>
-                                        </li>
-                                    </ul>
-                            </div>
+                          Object.defineProperties( ModelInstance.prototype, {
                         
-                            <div class="yui3-u-1-2">
-                            </div>
+                            /**
+                            * Delete documents from DB
+                            * @method delete
+                            */
+                            delete: { value: function(){
+                                Meteor.call( &quot;Formation.remove&quot;, this._id, this._model.collection._name );
+                              }
+                            }
+                          });
+                        
+                          return ModelInstance;
+                        };
+                        
+                            </pre>
                         </div>
                     </div>
                 </div>

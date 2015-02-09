@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>FieldInstance - quietcreep-formation</title>
+    <title>../quietcreep:formation-core/models/newModelInstance.js - quietcreep-formation</title>
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -98,40 +98,50 @@
                 <div id="docs-main">
                     <div class="content">
                         <div class="page-header">
-                            <h1>FieldInstance <small>Module</small></h1>
+                            <h1>../quietcreep:formation-core/models/newModelInstance.js <small>File</small></h1>
                         </div>
                         
-                        <div class="clearfix well well-small">
+                        <div class="file">
+                            <pre class="prettyprint linenums">
+                        //////////////////////////////////
+                        //  New Model Instance
+                        ////////////////////////////////
                         
+                        Formation.NewModelInstance = function( params, newData ){
+                          params.model = params.model instanceof Array ? params.model[ 0 ] : params.model;
+                          params.__name__ = &quot;NewModelInstance&quot;;
                         
-                                <div class="foundat">
-                                    Defined in: <a href="../files/.._quietcreep:formation-core_fields_fieldInstance.js.html#l10"><code>..&#x2F;quietcreep:formation-core&#x2F;fields&#x2F;fieldInstance.js:10</code></a>
-                                </div>
+                          var superinstance = ModelInstanceSuper( params );
                         
-                        </div>
+                          /**
+                          * NewModelInstance, a new, unsaved ModelInstance representation of a future database document; usually created by doing &#x27;new MyModel.newInstance( data )&#x27;; will insert, not update
+                          * @class NewModelInstance
+                          * @constructor
+                          * @extends ModelSuper
+                          * @param {Object} data      Data to create ModelInstance with
+                          */
+                          function NewModelInstance( data ){
+                            var data = data || {};
                         
+                            Object.defineProperty( this, &quot;_editMode&quot;, {
+                              value: new function(){
+                                this.get = function(){ return true; };
+                                this.set = function(){ return true; };
+                              },
+                              writable: true,
+                              enumerable: false
+                            });
                         
-                        <div class="moduledesc well well-small">
-                            <p>FieldInstance; does the actual handling and validation of data</p>
+                            superinstance.call( this, data );
+                          }
                         
-                        </div>
+                          NewModelInstance.prototype = Object.create( superinstance.prototype );
                         
+                          return NewModelInstance;
                         
-                        <div class="yui3-g">
-                            <div class="yui3-u-1-2">
-                                    <p>This module provides the following classes:</p>
+                        };
                         
-                                    <ul class="module-classes">
-                                        <li class="module-class">
-                                            <a href="../classes/FieldInstance.html">
-                                                FieldInstance
-                                            </a>
-                                        </li>
-                                    </ul>
-                            </div>
-                        
-                            <div class="yui3-u-1-2">
-                            </div>
+                            </pre>
                         </div>
                     </div>
                 </div>

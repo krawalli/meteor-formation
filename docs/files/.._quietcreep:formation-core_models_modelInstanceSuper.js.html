@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>../quietcreep:formation-core/models/modelInstanceSuper.js - quietcreep-formation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="quietcreep-formation" src="../assets/css/logo.png" style="max-height: 65%;" title="quietcreep-formation">
+            quietcreep-formation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>2.0.4</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/Field", "classes/FieldInstance", "classes/Model", "classes/ModelInstance", "classes/ModelSuper", "classes/NewModelInstance", "modules/Field", "modules/FieldInstance", "modules/Formation", "modules/Model", "modules/ModelInstance"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/Field.html">Field</a></li>
+	                            <li><a href="../classes/FieldInstance.html">FieldInstance</a></li>
+	                            <li><a href="../classes/Model.html">Model</a></li>
+	                            <li><a href="../classes/ModelInstance.html">ModelInstance</a></li>
+	                            <li><a href="../classes/ModelSuper.html">ModelSuper</a></li>
+	                            <li><a href="../classes/NewModelInstance.html">NewModelInstance</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/Field.html">Field</a></li>
+	                            <li><a href="../modules/FieldInstance.html">FieldInstance</a></li>
+	                            <li><a href="../modules/Formation.html">Formation</a></li>
+	                            <li><a href="../modules/Model.html">Model</a></li>
+	                            <li><a href="../modules/ModelInstance.html">ModelInstance</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <div class="page-header">
+                            <h1>../quietcreep:formation-core/models/modelInstanceSuper.js <small>File</small></h1>
+                        </div>
+                        
+                        <div class="file">
+                            <pre class="prettyprint linenums">
+                        /**
+                        * @module Formation
+                        * @submodule ModelInstance
+                        */
+                        ModelInstanceSuper = function( params ){
+                          /**
+                          * Model Super Class; not usually used by end dev
+                          * @class ModelSuper
+                          * @constructor
+                          * @param {Object} data      Data to create ModelInstance with
+                          */
+                          function ModelInstance( data ){
+                            var attrCopy  = _.clone( this._model.attributes );
+                            var schema    = this._model;
+                            var data      = data || {};
+                        
+                            _traverseModel.call( this, initArray, initFieldOrModel, initFieldOrModel, data );
+                        
+                            Object.defineProperties( this, {
+                              _attr:          { value: new ReactiveVar( attrCopy ) },
+                              _errors:        { value: new ReactiveVar( [] ), writable: true, enumerable: false },
+                              attributes:     { value: getAttributes.bind( this ) },
+                              setAttributes:  { value: setAttributes.bind( this ) },
+                            });
+                        
+                            if ( this.isNew() ) this.editMode();
+                          }
+                        
+                          Object.defineProperties( ModelInstance.prototype, {
+                            __name__: { value: params.__name__ },
+                        
+                            /**
+                            * Model that instance was instantiated from
+                            * @property _model
+                            * @type Model
+                            */
+                            _model: { value: params.model },
+                        
+                            /**
+                            * Passed in summary of model
+                            * @method summary
+                            * @return String
+                            */
+                            summary: { value: params.model.summary },
+                        
+                            /**
+                            * Passed in beforeSave hook of model
+                            * @method beforeSave
+                            */
+                            beforeSave: { value: params.model.hooks.beforeSave },
+                        
+                            /**
+                            * Passed in afterSave hook of model
+                            * @method afterSave
+                            */
+                            afterSave: { value: params.model.hooks.afterSave },
+                        
+                            /**
+                            * Passed in beforeValidation hook of model
+                            * @method beforeValidation
+                            */
+                            beforeValidation: { value: params.model.hooks.beforeValidation },
+                        
+                            /**
+                            * Passed in afterValidation hook of model
+                            * @method afterValidation
+                            */
+                            afterValidation: { value: params.model.hooks.afterValidation },
+                        
+                            /**
+                            * Passed in modelValidator hook of model
+                            * @method modelValidator
+                            * @return Match.Where
+                            */
+                            modelValidator: { value: params.model.hooks.modelValidator },
+                        
+                            /**
+                            * Check to see if model is editable by user; client-side only
+                            * @method editable
+                            * @return Boolean
+                            */
+                            editable: { value: params.model.editable },
+                        
+                            /**
+                            * Check to see if model is savable by user
+                            * @method savable
+                            * @return Boolean
+                            */
+                            savable: { value: params.model.savable },
+                        
+                            /**
+                            * Check to see if model (in array) is removable by user
+                            * @method removable
+                            * @return Boolean
+                            */
+                            removable: { value: params.model.removable },
+                        
+                            /**
+                            * If model is editable by user, toggle editMode
+                            * @method editMode
+                            * @param {Boolean} boo [optional]
+                            * @return Boolean
+                            */
+                            editMode:  { value: function editMode( boo ){
+                              if ( this.editable() ){
+                                typeof boo === &quot;boolean&quot; ? this._editMode.set( boo ) : this._editMode.set(! this._editMode.get() );
+                        
+                                _traverseModel.call( this, editModeArray, editModeModel, editModeModel )
+                              }
+                              return this.inEditMode();
+                            }},
+                        
+                            /**
+                            * Returns current state of editMode
+                            * @method inEditMode
+                            * @return Boolean
+                            */
+                            inEditMode:  { value: function inEditMode(){
+                              return this._editMode.get();
+                            }},
+                        
+                            /**
+                            * Model-level errors (as opposed to field-level errors)
+                            * @method errors
+                            * @return Array
+                            */
+                            errors: { value: function errors(){
+                              return this._errors.get();
+                            }},
+                        
+                            /**
+                            * All errors, field and model-level
+                            * @method getAllErrors
+                            * @return Object
+                            */
+                            getAllErrors: { value: function getAllErrors(){
+                              var errors  = {};
+                              errors = _traverseModel.call( this, setArrayErrors, setModelErrors, setFieldErrors, errors );
+                              return errors;
+                            }},
+                        
+                            /**
+                            * If model has errors field or model-level, return true; else false
+                            * @method hasErrors
+                            * @return Boolean
+                            */
+                            hasErrors: { value: function hasErrors(){
+                              return ! _.isEmpty( this.getAllErrors() );
+                            }},
+                        
+                            /**
+                            * Return object of fields only, limited to fields present in model
+                            * @method fields
+                            * @return Object
+                            */
+                            fields: { value: function fields(){
+                              var fields = {}
+                              for ( var field in this ){
+                                if ( _.has( this._model, field ) ){
+                                  fields[ field ] = this[ field ];
+                                }
+                              }
+                              return fields;
+                            }},
+                        
+                            /**
+                            * Return array of fields
+                            * @method fieldsArray
+                            * @return Array
+                            */
+                            fieldsArray: { value: function fieldsArray(){
+                              return _.values( this.fields() );
+                            }},
+                        
+                            /**
+                            * If instance is NewModelInstance, return true; else false
+                            * @method isNew
+                            * @return Boolean
+                            */
+                            isNew: { value: function isNew(){
+                              return this.__name__ === &#x27;NewModelInstance&#x27;;
+                            }},
+                        
+                            /**
+                            * Save to database; returns number of docs changed (either 1 on success or 0 on fail)
+                            * @method save
+                            * @return Number
+                            */
+                            save: { value: function save( callback ){
+                              this.validate();
+                              if ( this.beforeSave ) this.beforeSave();
+                        
+                              var data = this.getValue();
+                        
+                              function saveCallback( err, res ){
+                                if ( err ){
+                                  var errs = this._errors.get();
+                                  errs.push( err );
+                                  this._errors.set( errs );
+                                  console.log( err.message );
+                                  return;
+                                }
+                                if (! this.isNew() )  this.setValue( res );
+                                if ( this.afterSave ) this.afterSave();
+                                if ( typeof( callback ) === &quot;function&quot; ) callback( err, res );
+                              }
+                        
+                              if ( this.isNew() ){
+                                if (! this._parent ) delete data._id;
+                                else _ensureId.call( this );
+                                var objectId = Meteor.call( &quot;Formation.insert&quot;, data, this._model.collection._name, saveCallback.bind( this ));
+                              } else {
+                                var objectId = Meteor.call( &quot;Formation.update&quot;, this._id, data, this._model.collection._name, saveCallback.bind( this ));
+                              }
+                        
+                              this.editMode( false );
+                              return objectId;
+                            }},
+                        
+                            /**
+                            * Determines if model has any retrievable value
+                            * @method isEmpty
+                            * @return Boolean
+                            */
+                            isEmpty: { value: function isEmpty(){
+                              return _.chain( this.getValue() ).values().compact().isEmpty().value();
+                            }},
+                        
+                            /**
+                            * Return plain JavaScript object with values.  Blank, non-required values and their fields are not included
+                            * @method getValue
+                            * @return Object
+                            */
+                            getValue: { value: function getValue(){
+                              var data    = {};
+                              if (! this.savable() &amp;&amp; ! this._parent ) return data;
+                              _traverseModel.call( this, getArrayData, getModelData, getModelData, data );
+                        
+                              if (! this._model.required &amp;&amp; _.chain( data ).values().compact().isEmpty().value() &amp;&amp; this.isNew() )
+                                return;
+                              if ( this._parent &amp;&amp; this._id ) data._id = this._id;
+                        
+                              return data;
+                            }},
+                        
+                            /**
+                            * Set instance data with plain JavaScript object.
+                            * @method setValue
+                            * @param {Object} data
+                            * @return ModelInstance
+                            */
+                            setValue: { value: function setValue( patch ){
+                              if (! patch ) return;
+                              if (! patch.__name__ ) patch = new this._model.instance( patch );
+                        
+                              _traverseModel.call( this, setArrayValue, setModelValue, setModelValue, patch );
+                              return this;
+                            }},
+                        
+                            /**
+                            * Validate instance; returns undefined on success; throws errors on failure
+                            * @method validate
+                            * @param {function} callback
+                            */
+                            validate: { value: function validate( callback ){
+                              this._errors.set( [] );
+                              if ( this.beforeValidation ) this.beforeValidation();
+                              _ensureId.call( this );
+                              _traverseModel.call( this, validateArray, validateModel, validateModel );
+                        
+                              if ( this.modelValidator ){
+                                try {
+                                  check( this.getValue(), this.modelValidator() );
+                                } catch( e ){
+                                  var errs = this._errors.get();
+                                  errs.push( e );
+                                  this._errors.set( errs );
+                                }
+                              }
+                        
+                              if ( this.hasErrors() ){
+                                console.log( this.getAllErrors() );
+                                throw new Error( &#x27;Please check the fields for errors.&#x27; );
+                              }
+                        
+                              if ( this.afterValidation ) this.afterValidation();
+                              if ( typeof( callback ) === &quot;function&quot; ) callback();
+                            }},
+                        
+                            /**
+                            * Revert to previously saved value
+                            * @method revert
+                            */
+                            revert: { value: function revert(){
+                              if (! this._model.collection || ! this._id || this.isNew() ) return;
+                              var revertTo = this._model.collection.findOne( this._id );
+                              this.setValue( revertTo );
+                            }}
+                        
+                          });
+                        
+                          // add virtual fields to prototype
+                          for ( var field in params.model.virtualFields ){
+                            if ( typeof( params.model.virtualFields[ field ] ) === &#x27;function&#x27; ){
+                              Object.defineProperty( ModelInstance.prototype, field, { value: params.model.virtualFields[ field ] } );
+                            } else {
+                              throw new Error( &quot;All virtual fields must be functions.&quot; );
+                            }
+                          }
+                        
+                          return ModelInstance;
+                        };
+                        
+                        
+                        
+                        /////////////////////////////////////
+                        ///  Private  //////////
+                        /////////////////////////////////////
+                        
+                        function _ensureId( dataId ){
+                          var dataId  = dataId || null;
+                          var newId   = typeof( dataId ) === &#x27;string&#x27; ? dataId : ( new Mongo.ObjectID ).toJSONValue();
+                          if (! this._id &amp;&amp; this._parent )
+                            Object.defineProperty( this, &quot;_id&quot;, { value: newId })
+                        }
+                        
+                        
+                        function _ensureParent( field ){
+                          if (! field._parent )
+                            Object.defineProperty( field, &quot;_parent&quot;, { value: this })
+                        }
+                        
+                        
+                        function _traverseModel( withArray, withModel, withField, data ){
+                          var schema    = this._model;
+                        
+                          for ( var f in schema ){
+                            var field = schema[ f ];
+                        
+                            if ( field instanceof Array ){
+                              // withArray ( item, fieldName, context )
+                              if ( typeof( withArray ) === &quot;function&quot; ) withArray.call( this, field[0], f, data );
+                        
+                            } else if ( field.__name__ === &quot;Model&quot; ) {
+                              // withModel
+                              if ( typeof( withModel ) === &quot;function&quot; ) withModel.call( this, field, f, data );
+                        
+                            } else if ( field.__name__ === &quot;Field&quot; ){
+                              // withField
+                              if ( typeof( withField ) === &quot;function&quot; ) withField.call( this, field, f, data );
+                        
+                            }
+                          }
+                        
+                          return data;
+                        }
+                        
+                        
+                        function initArray( item, fieldName, data ){
+                          data[ fieldName ]     = data[ fieldName ] instanceof Array ? data[ fieldName ] : [];
+                          this[ fieldName ]     = [];
+                        
+                          for ( var i=0; i &lt; data[ fieldName ].length; i++ ){
+                            var arrayData = data[ fieldName ][ i ];
+                        
+                            if ( this.isNew() )
+                              this[ fieldName ][ i ] = new item.newInstance( arrayData );
+                            else
+                              this[ fieldName ][ i ] = new item.instance( arrayData );
+                        
+                            _ensureParent.call( this, this[ fieldName ][ i ] );
+                            _ensureId.call( this[ fieldName ][ i ], arrayData._id );
+                            this[ fieldName ][ i ].setAttributes();
+                          }
+                        }
+                        
+                        
+                        function initFieldOrModel( item, fieldName, data ){
+                          var fieldData     = data[ fieldName ];
+                          this[ fieldName ] = new item.instance( fieldData );
+                          this[ fieldName ]._editMode.set( this.isNew() );
+                          _ensureParent.call( this, this[ fieldName ] );
+                          this[ fieldName ].setAttributes();
+                        }
+                        
+                        
+                        function setAttributes( attributes ){
+                          var attributes        = attributes || {};
+                          var oldAttributes     = _.clone( this._model.attributes );
+                          var schema            = this._model;
+                        
+                          if      ( typeof( attributes.bootstrap )  === &quot;boolean&quot; ) attributes.bootstrap = attributes.bootstrap;
+                          else if ( typeof( oldAttributes.bootstrap ) === &quot;boolean&quot; ) attributes.bootstrap = oldAttributes.bootstrap;
+                          else attributes.bootstrap = true;
+                        
+                          attributes.class      = attributes.class || oldAttributes.class || &#x27;&#x27;;
+                          attributes.class      = attributes.class.replace( /form-control/ig, &#x27;&#x27; ).trim();
+                          if ( attributes.bootstrap ) attributes.class += &quot; form-control&quot;;
+                          attributes.class = attributes.class.trim();
+                        
+                          if      ( typeof( attributes.horizontal )  === &quot;boolean&quot; ) attributes.horizontal = attributes.horizontal;
+                          else if ( typeof( oldAttributes.horizontal ) === &quot;boolean&quot; ) attributes.horizontal = oldAttributes.horizontal;
+                          else attributes.horizontal = true;
+                        
+                          function setArrayAttributes( item, fieldName, data ){
+                            for ( var i=0; i &lt; this[ fieldName ].length; i++ ){
+                              this[ fieldName ][ i ].setAttributes( data );
+                            }
+                          }
+                          function setModelAttributes( item, fieldName, data ){
+                            this[ fieldName ].setAttributes( data )
+                          }
+                        
+                          _traverseModel.call( this, setArrayAttributes, setModelAttributes, setModelAttributes, attributes )
+                        
+                          this._attr.set( attributes );
+                          return this;
+                        }
+                        
+                        
+                        function getAttributes(){
+                          return this._attr.get();
+                        }
+                        
+                        
+                        function editModeArray( item, fieldName, data ){
+                          for( var i=0; i &lt; this[ fieldName ].length; i++ ){
+                            this[ fieldName ][ i ].editMode( this.inEditMode() );
+                          }
+                        }
+                        
+                        
+                        function editModeModel( item, fieldName, data ){
+                          this[ fieldName ].editMode( this.inEditMode() );
+                        }
+                        
+                        
+                        function setArrayErrors( item, fieldName, data ){
+                          data[ fieldName ] = [];
+                          for ( var i=0; i &lt; this[ fieldName ].length; i++ ){
+                            if ( this[ fieldName ][ i ].hasErrors() ){
+                              data[ fieldName ].push( this[ fieldName ][ i ].getAllErrors() );
+                            }
+                          }
+                          if ( data[ fieldName ].length &lt;= 0 ) delete data[ fieldName ];
+                        }
+                        
+                        
+                        function setModelErrors( item, fieldName, data ){
+                          if ( this[ fieldName ].hasErrors() ) data[ fieldName ] = this[ fieldName ].getAllErrors();
+                        }
+                        
+                        
+                        function setFieldErrors( item, fieldName, data ){
+                          if ( this[ fieldName ].hasErrors() ) data[ fieldName ] = this[ fieldName ].errors();
+                        }
+                        
+                        
+                        function getArrayData( item, fieldName, data ){
+                          if (! this[ fieldName ] instanceof Array ) return [];
+                          data[ fieldName ] = [];
+                        
+                          for ( var i=0; i &lt; this[ fieldName ].length; i++ ){
+                            if (! this[ fieldName ][ i ].isNew() ){
+                              data[ fieldName ].push( this[ fieldName ][ i ].getValue() );
+                        
+                            } else if ( item.required || ! this[ fieldName ][ i ].isEmpty() ){
+                              data[ fieldName ].push( this[ fieldName ][ i ].getValue() );
+                            }
+                          }
+                          return data;
+                        }
+                        
+                        
+                        function getModelData( item, fieldName, data ){
+                          data[ fieldName ] = this[ fieldName ].getValue();
+                          return data;
+                        }
+                        
+                        
+                        function setArrayValue( modelField, fieldName, patch ){
+                          var doc     = this[ fieldName ];
+                          var newDocs = [];
+                          patchDoc    = patch[ fieldName ] || [];
+                          if (! doc ) doc = patchDoc;
+                        
+                          // iterate over items from new doc;
+                          // find any items new to doc
+                          patchDoc.forEach( function( item, index, array ){
+                            var oldItem = _.find( doc, function( i ){ return i._id === item._id });
+                            if (! oldItem ){
+                              var newItem = new modelField.newInstance( item.getValue() );
+                              if ( newItem.savable() ) newDocs.push( newItem );
+                              _ensureParent.call( this, newItem );
+                              _ensureId.call( newItem, patch[ fieldName ][ index ]._id );
+                        
+                            } else if ( oldItem ){
+                              oldItem.setValue( item )
+                              newDocs.push( oldItem );
+                            }
+                          }.bind( this ))
+                        
+                          // iterate over old items;
+                          // find old items that have been removed from old doc;
+                          // remove if permissible; else add/retain item;
+                          doc.forEach( function( item, index, array ){
+                            var newItem = _.find( newDocs, function( i ){ return i._id === item._id });
+                            if (( ! item.savable() || ! item.removable() ) &amp;&amp; ! newItem ){
+                              newDocs.push( item );
+                            }
+                        
+                          }.bind( this ))
+                        
+                          if ( _.isEmpty( newDocs ) &amp;&amp; ! Meteor.isServer ){
+                            for ( var i=0; i &lt; modelField.extra; i++ ){
+                              this[ fieldName ].push( new modelField.newInstance );
+                              _ensureParent.call( this, this[ fieldName ][ i ] );
+                              _ensureId.call( this[ fieldName ][ i ] );
+                            }
+                          }
+                        
+                          this[ fieldName ] = newDocs;
+                        }
+                        
+                        
+                        function setModelValue( modelField, fieldName, patch ){
+                          var doc       = this[ fieldName ];
+                          var patchDoc  = patch[ fieldName ];
+                          if ( doc.savable() &amp;&amp; patchDoc.getValue() !== undefined )
+                            doc.setValue( patchDoc.getValue() );
+                        }
+                        
+                        
+                        function validateArray( item, fieldName ){
+                          if ( this[ fieldName ] instanceof Array ){
+                            for ( var i=0; i &lt; this[ fieldName ].length; i++ ){
+                              _ensureParent.call( this, this[ fieldName ][ i ] );
+                              this[ fieldName ][ i ].validate();
+                            }
+                          }
+                        }
+                        
+                        
+                        function validateModel( item, fieldName ){
+                          this[ fieldName ].validate();
+                        
+                          if ( item.unique &amp;&amp; this._model.collection ){
+                            var find = {};
+                            find[ field ] = this[ fieldName ].value;
+                            find._id = { &#x27;$ne&#x27;: this._id };
+                        
+                            // check uniqueness; add error to model if not unique
+                            if ( this._model.collection.find( find ).count() !== 0 ){
+                              var errs = this[ fieldName ]._errors.get();
+                              errs.push( new Error( &quot;This &quot; + field + &quot; already exists.&quot; ) );
+                              this._errors.set( errs );
+                            }
+                          }
+                        }
+                        
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

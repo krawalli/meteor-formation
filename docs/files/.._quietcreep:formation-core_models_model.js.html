@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>../quietcreep:formation-core/models/model.js - quietcreep-formation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="quietcreep-formation" src="../assets/css/logo.png" style="max-height: 65%;" title="quietcreep-formation">
+            quietcreep-formation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>2.0.4</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/Field", "classes/FieldInstance", "classes/Model", "classes/ModelInstance", "classes/ModelSuper", "classes/NewModelInstance", "modules/Field", "modules/FieldInstance", "modules/Formation", "modules/Model", "modules/ModelInstance"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/Field.html">Field</a></li>
+	                            <li><a href="../classes/FieldInstance.html">FieldInstance</a></li>
+	                            <li><a href="../classes/Model.html">Model</a></li>
+	                            <li><a href="../classes/ModelInstance.html">ModelInstance</a></li>
+	                            <li><a href="../classes/ModelSuper.html">ModelSuper</a></li>
+	                            <li><a href="../classes/NewModelInstance.html">NewModelInstance</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/Field.html">Field</a></li>
+	                            <li><a href="../modules/FieldInstance.html">FieldInstance</a></li>
+	                            <li><a href="../modules/Formation.html">Formation</a></li>
+	                            <li><a href="../modules/Model.html">Model</a></li>
+	                            <li><a href="../modules/ModelInstance.html">ModelInstance</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <div class="page-header">
+                            <h1>../quietcreep:formation-core/models/model.js <small>File</small></h1>
+                        </div>
+                        
+                        <div class="file">
+                            <pre class="prettyprint linenums">
+                        /**
+                        * Generate Forms from JS; for Meteor
+                        * @module Formation
+                        */
+                        
+                        var err = function( message ){
+                          throw new Error( message );
+                        };
+                        
+                        
+                        /**
+                        * @module Formation
+                        * @submodule Model
+                        */
+                        
+                        Formation.Model = function( params ){
+                          var self = this;
+                          if ( typeof params === &quot;function&quot; ) params = new params;
+                        
+                          _.each( params.schema, function( field, key ){
+                            if (! field.label &amp;&amp; field instanceof Formation.Field ){
+                              Object.defineProperty( field, &quot;label&quot;, { value: Formation.camelToTitleCase( key ) } );
+                            }
+                          });
+                        
+                        
+                          // assemble query filter
+                          var filter;
+                          switch ( typeof( params.filter ) ){
+                          case &#x27;undefined&#x27;:
+                            filter = function(){ return {}; };
+                            break;
+                          case &#x27;object&#x27;:
+                            filter = function(){ return params.filter; };
+                            break;
+                          case &#x27;function&#x27;:
+                            filter = params.filter;
+                            break;
+                          }
+                        
+                          var editable;
+                          switch ( typeof( params.editable ) ){
+                            case Meteor.isServer:
+                              editable = function(){ return true };
+                              break;
+                            case &quot;boolean&quot;:
+                              var boo = params.editable
+                              editable = function(){ return boo };
+                              break;
+                            case &quot;function&quot;:
+                              editable = params.editable;
+                              break;
+                            default:
+                              editable = function(){ return true };
+                              break;
+                          }
+                        
+                          var savable;
+                          switch ( typeof( params.savable ) ){
+                            case &quot;boolean&quot;:
+                              var boo = params.savable
+                              savable = function(){ return boo };
+                              break;
+                            case &quot;function&quot;:
+                              savable = params.savable;
+                              break;
+                            default:
+                              savable = function(){ return true };
+                              break;
+                          }
+                        
+                          var removable;
+                          switch ( typeof( params.removable ) ){
+                            case &quot;boolean&quot;:
+                              var boo = params.removable;
+                              removable = function(){ return boo };
+                              break;
+                            case &quot;function&quot;:
+                              removable = params.removable;
+                              break;
+                            default:
+                              removable = function(){ return true };
+                              break;
+                          }
+                        
+                          var hooks = {};
+                          hooks.beforeSave        = typeof( params.beforeSave )       === &#x27;function&#x27; || typeof( params.beforeSave )       === &#x27;undefined&#x27; ? params.beforeSave       : err( &quot;beforeSave hook must be a function&quot; );
+                          hooks.afterSave         = typeof( params.afterSave )        === &#x27;function&#x27; || typeof( params.afterSave )        === &#x27;undefined&#x27; ? params.afterSave        : err( &quot;afterSave hook must be a function&quot; );
+                          hooks.beforeValidation  = typeof( params.beforeValidation ) === &#x27;function&#x27; || typeof( params.beforeValidation ) === &#x27;undefined&#x27; ? params.beforeValidation : err( &quot;beforeValidation hook must be a function&quot; );
+                          hooks.afterValidation   = typeof( params.afterValidation )  === &#x27;function&#x27; || typeof( params.afterValidation )  === &#x27;undefined&#x27; ? params.afterValidation  : err( &quot;afterValidation hook must be a function&quot; );
+                          hooks.modelValidator    = typeof( params.modelValidator )   === &#x27;function&#x27; || typeof( params.modelValidator )   === &#x27;undefined&#x27; ? params.modelValidator   : err( &quot;modelValidator hook must be a function&quot; );
+                        
+                          var attributes        = params.attributes || {};
+                        
+                          function setAttributes( attrs ){
+                            if ( typeof( attrs.bootstrap )  === &quot;boolean&quot; ) attributes.bootstrap = attrs.bootstrap;
+                            else attributes.bootstrap = typeof( attributes.bootstrap ) === &quot;boolean&quot; ? attributes.bootstrap : true;
+                        
+                            attributes.class  = attrs.class  || attributes.class  || &#x27;&#x27;;
+                            attributes.class  = attributes.class.replace( /form-control/ig, &#x27;&#x27; ).trim();
+                            if ( attributes.bootstrap ) attributes.class += &#x27; form-control&#x27;;
+                            attributes.class = attributes.class.trim();
+                        
+                            if      ( typeof( attrs.horizontal ) === &quot;boolean&quot; )        attributes.horizontal = attrs.horizontal;
+                            else if ( typeof( attributes.horizontal ) === &quot;boolean&quot; )   attributes.horizontal = attributes.horizontal;
+                            else attributes.horizontal = true;
+                        
+                            return this;
+                          }
+                        
+                          setAttributes( attributes );
+                        
+                          function getAttributes(){
+                            return attributes;
+                          }
+                        
+                          /**
+                          * Make a Model for a form/DB document to adhere to and validate against
+                          * @class Model
+                          * @constructor
+                          * @param {Object} params  { &lt;br /&gt;
+                                                      &lt;b&gt;collection&lt;/b&gt;: Mongo.Collection,&lt;br /&gt;
+                                                      &lt;b&gt;schema&lt;/b&gt;: Object, determines data structure for your model, and is generally made up of Fields,&lt;br /&gt;
+                                                      &lt;b&gt;virtualFields&lt;/b&gt;: { functions } [optional],  object of &quot;name: functions&quot; to include in ModelInstances that manipulate data of actual fields and return something;&lt;br /&gt;
+                                                      &lt;b&gt;beforeValidation&lt;/b&gt;: function [optional],  function to run before ModelInstance validates,&lt;br /&gt;
+                                                      &lt;b&gt;afterValidation&lt;/b&gt;: function [optional],  function to run after ModelInstance validates,&lt;br /&gt;
+                                                      &lt;b&gt;beforeSave&lt;/b&gt;: function [optional],  function to run before ModelInstance saves,&lt;br /&gt;
+                                                      &lt;b&gt;afterSave&lt;/b&gt;: function [optional],  function to run after ModelInstance saves,&lt;br /&gt;
+                                                      &lt;b&gt;modelValidator&lt;/b&gt;: function [optional],  function to run after each field validates, before saving; returns a pattern (i.e. Match.Where);  used to run extra validation functions on model as a whole&lt;br /&gt;
+                                                      &lt;b&gt;filter&lt;/b&gt;:  Object/Function [optional],  object/function to add to filter passed into Model.find() or Model.findOne()&lt;br /&gt;
+                                                    }
+                          */
+                          function Model(){}
+                        
+                          Object.defineProperties( Model.prototype, {
+                            __name__: { value: &#x27;Model&#x27; },
+                        
+                        
+                            /**
+                            * Mongo.Collection object
+                            * @property collection
+                            * @type Mongo.Collection
+                            */
+                            collection: { value: params.collection instanceof Meteor.Collection || typeof( params.collection ) === &#x27;undefined&#x27; ? params.collection : err( &quot;Please enter a Meteor Collection for instances of Formation.Model&quot; ) },
+                        
+                        
+                            /**
+                            * If model is array, number of extra new instances to create
+                            * @property extra
+                            * @type Number
+                            */
+                            extra: { value: typeof( params.extra ) === &quot;number&quot; ? params.extra : 1 },
+                        
+                        
+                            /**
+                            * If model is array, is it required?
+                            * @property required
+                            * @type Boolean
+                            */
+                            required: { value: typeof( params.required ) === &quot;boolean&quot; ? params.required : true },
+                        
+                        
+                            /**
+                            * Developer-set function to determine if model is editable by user;  client-side only.
+                            *  Context of the function you pass in will be a ModelInstance (i.e. use this.&lt;field&gt;.value to access fields values );
+                            * @method editable
+                            * @type Function
+                            */
+                            editable: { value: editable },
+                        
+                        
+                            /**
+                            * Developer-set function to determine if model is savable by user;
+                            *  Context of the function you pass in will be a ModelInstance (i.e. use this.&lt;field&gt;.value to access fields values );
+                            * @method savable
+                            * @type Function
+                            */
+                            savable: { value: savable },
+                        
+                        
+                            /**
+                            * Developer-set function to determine if model (in an array) is removable by user;
+                            *  Context of the function you pass in will be a ModelInstance (i.e. use this.&lt;field&gt;.value to access fields values );
+                            * @method removable
+                            * @type Function
+                            */
+                            removable: { value: removable },
+                        
+                        
+                            /**
+                            * Object containing beforeSave, afterSave, beforeValidation, afterValidation, and modelValidator hooks.
+                            *  Context of the function you pass in will be a ModelInstance (i.e. use this.&lt;field&gt;.value to access fields values );
+                            * @property hooks
+                            * @type Object
+                            */
+                            hooks: { value: hooks },
+                        
+                        
+                            /**
+                            * Object attributes to be distributed down to each field
+                            * @property attributes
+                            * @type Object
+                            */
+                            attributes: { get: getAttributes },
+                        
+                        
+                            /**
+                            * Object attributes to be distributed down to each field
+                            * @property attributes
+                            * @type Object
+                            */
+                            setAttributes: { value: setAttributes },
+                        
+                        
+                            /**
+                            * Developer-set function to return a summary string of model instances of this model.
+                            *  Context of the function you pass in will be a ModelInstance (i.e. use this.&lt;field&gt;.value to access fields values );
+                            * @method summary
+                            * @type Function
+                            */
+                            summary: { value: typeof( params.summary ) === &#x27;function&#x27; ? params.summary : function(){ return &#x27;un-summarized model&#x27;; } },
+                            filter: { value: filter },
+                            fieldsFilter: { value: function(){
+                                return _.reduce( _.keys( this ), function( memo, value ){
+                                  memo[ value ] = 1;
+                                  return memo;
+                                }, {} );
+                              }
+                            },
+                        
+                        
+                            savableFields: { value: function(){
+                              return _.reduce( _.keys( this ), function( memo, field ){
+                                var f;
+                                if ( this[ field ] instanceof Array ) f = this[ field ][ 0 ];
+                                else f = this[ field ]
+                        
+                                if ( f.savable() ) memo.push( field );
+                                return memo;
+                              }.bind( this ), [] )
+                            }},
+                        
+                        
+                            /**
+                            * Object of functions (and their names) to manipulate instance data and return it as if it were a real ModelInstance field.
+                            *  Context of the function you pass in will be a ModelInstance (i.e. use this.&lt;field&gt;.value to access fields values );
+                            * @property virtualFields
+                            * @type Object
+                            */
+                            virtualFields: { value: ( params.virtualFields instanceof Object ) &amp;&amp; ! ( params.virtualFields instanceof Array ) ? params.virtualFields : {} },
+                        
+                        
+                            /**
+                            * Find DB Objects; Same as collection.find().fetch(), but returns ModelInstances instead of plain objects
+                            * @method find
+                            * @param {Object} Selector
+                            * @param {Object} Options
+                            * @return {Array}           Returns an array of ModelInstances, not a cursor; you can access the raw DB objects by using Model.collecton.find()
+                            */
+                            find: { value: function( filter, options ){
+                                var protoself = this;
+                        
+                                var filter = filter || {};
+                                _.extend( filter, protoself.filter() );
+                                var options = options || {};
+                                _.extend( options, { fields: this.fieldsFilter() } );
+                        
+                                collectionObjects = this.collection.find( filter, options ).fetch();
+                        
+                                for ( var i=0; i &lt; collectionObjects.length; i++ ){
+                                  for ( field in protoself ){
+                                    if ( protoself[ field ] instanceof Array &amp;&amp; typeof( collectionObjects[ i ][ field ] ) === &quot;undefined&quot; ){
+                                      collectionObjects[ i ][ field ] = [];
+                                    }
+                                  }
+                                }
+                        
+                                instances = [];
+                                for ( collectionObject in collectionObjects ){
+                                  var instance = new protoself.instance( collectionObjects[ collectionObject ] );
+                                  instances.push( instance );
+                                }
+                        
+                                return instances;
+                              }
+                            },
+                        
+                        
+                            /**
+                            * Find One DB Object; Same as collection.findOne(), but returns a ModelInstance instead of a plain object
+                            * @method findOne
+                            * @param {Object} Selector
+                            * @param {Object} Options
+                            * @return {ModelInstance}     Returns a single ModelInstances or undefined; you can access the raw DB objects by using Model.collecton.findOne()
+                            */
+                            findOne: { value: function( filter, options ){
+                                var protoself = this;
+                        
+                                filter = filter || {};
+                                _.extend( filter, protoself.filter() );
+                                options = options || {};
+                                _.extend( options, { fields: this.fieldsFilter() } );
+                                var collectionObject = protoself.collection.findOne( filter, options );
+                        
+                                var instance;
+                                if ( collectionObject ){
+                                  for ( field in protoself ){
+                                    if ( protoself[ field ] instanceof Array &amp;&amp; typeof( collectionObject[ field ] ) === &quot;undefined&quot; ){
+                                      collectionObject[ field ] = [];
+                                    }
+                                  }
+                        
+                                  instance = new protoself.instance( collectionObject );
+                                }
+                        
+                                return instance;
+                              }
+                            }
+                          });
+                        
+                          var model = new Model;
+                          Object.defineProperties( Model.prototype, {
+                        
+                            /**
+                            * Create a new ModelInstance (i.e. an instance to update, not insert);  must use &quot;new&quot; keyword
+                            * @method instance
+                            * @constructor
+                            * @param {Object} data    data to create ModelInstance with
+                            */
+                            instance: { value: Formation.ModelInstance({ model: model }) },
+                        
+                            /**
+                            * Create a new NewModelInstance (i.e. an instance to insert, not update);  must use &quot;new&quot; keyword
+                            * @method newInstance
+                            * @constructor
+                            * @param {Object} data    data to create NewModelInstance with
+                            */
+                            newInstance: { value: Formation.NewModelInstance({ model: model }) }
+                          });
+                        
+                        
+                          var schema = params.schema || err( &#x27;Please add a schema to this model&#x27; );
+                          for ( field in schema ){
+                            Object.defineProperty( model, field, { value: schema[ field ], enumerable: true });
+                            if ( model[ field ] instanceof Array )
+                              model[ field ][ 0 ].setAttributes( model.attributes );
+                            else
+                            model[ field ].setAttributes( model.attributes );
+                          }
+                        
+                          return model;
+                        };
+                        
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

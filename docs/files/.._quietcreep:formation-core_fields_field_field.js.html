@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>../quietcreep:formation-core/fields/field/field.js - quietcreep-formation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="quietcreep-formation" src="../assets/css/logo.png" style="max-height: 65%;" title="quietcreep-formation">
+            quietcreep-formation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>2.0.4</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/Field", "classes/FieldInstance", "classes/Model", "classes/ModelInstance", "classes/ModelSuper", "classes/NewModelInstance", "modules/Field", "modules/FieldInstance", "modules/Formation", "modules/Model", "modules/ModelInstance"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/Field.html">Field</a></li>
+	                            <li><a href="../classes/FieldInstance.html">FieldInstance</a></li>
+	                            <li><a href="../classes/Model.html">Model</a></li>
+	                            <li><a href="../classes/ModelInstance.html">ModelInstance</a></li>
+	                            <li><a href="../classes/ModelSuper.html">ModelSuper</a></li>
+	                            <li><a href="../classes/NewModelInstance.html">NewModelInstance</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/Field.html">Field</a></li>
+	                            <li><a href="../modules/FieldInstance.html">FieldInstance</a></li>
+	                            <li><a href="../modules/Formation.html">Formation</a></li>
+	                            <li><a href="../modules/Model.html">Model</a></li>
+	                            <li><a href="../modules/ModelInstance.html">ModelInstance</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <div class="page-header">
+                            <h1>../quietcreep:formation-core/fields/field/field.js <small>File</small></h1>
+                        </div>
+                        
+                        <div class="file">
+                            <pre class="prettyprint linenums">
+                        /**
+                        * @module Formation
+                        * @submodule Field
+                        */
+                        
+                        err = function( message ){ throw new Error( message ); };
+                        
+                        ////////////////////////////////////////////////////////////
+                        ////  Field Parent
+                        ////////////////////////////////////////////////////////////
+                        
+                        
+                        if ( typeof( Formation.Fields ) === &#x27;undefined&#x27; )  Formation.Fields = {};
+                        
+                        
+                        /**
+                        *	Field Parent Model; all fields inherit from this
+                        * @class Field
+                        * @constructor
+                        * @param {Object} params      {&lt;br /&gt;
+                        *                                &lt;b&gt;label&lt;/b&gt;:     String [optional]. Label for field,&lt;br /&gt;
+                        *                                &lt;b&gt;helpText&lt;/b&gt;:  String [optional]. Help text; will often appear as field placeholder,&lt;br /&gt;
+                        *                                &lt;b&gt;widget&lt;/b&gt;:    String [optional]. Widget name for field; should correspond to a Template[ widget ],&lt;br /&gt;
+                        *                                &lt;b&gt;label&lt;/b&gt;:     String [optional]. Label for field,&lt;br /&gt;
+                        *                                &lt;b&gt;unique&lt;/b&gt;:    Boolean [optional]. Ensure value is unique to one ModelInstance / DB document,&lt;br /&gt;
+                        *                                &lt;b&gt;min&lt;/b&gt;:       Number [optional]. Minimum length / amount of value;  implementation changes based on field data-type,&lt;br /&gt;
+                        *                                &lt;b&gt;max&lt;/b&gt;:       Number [optional]. Maximum length / amount of value;  implementation changes based on field data-type,&lt;br /&gt;
+                        *                                &lt;b&gt;editable&lt;/b&gt;:  Function [optional]. Function to determine if user can edit field; runs with FieldInstance context; client-side only,&lt;br /&gt;
+                        *                                &lt;b&gt;required&lt;/b&gt;:  Boolean [optional]. Is this field required?,&lt;br /&gt;
+                        *                                &lt;b&gt;defaultValue&lt;/b&gt;:  Number/String/Function [optional]. Default value / function to return default value for FieldInstance,&lt;br /&gt;
+                        *                                &lt;b&gt;toDOM&lt;/b&gt;:     Function [optional]. Function to transform data in preparation for DOM display,&lt;br /&gt;
+                        *                                &lt;b&gt;fromDOM&lt;/b&gt;:   Function [optional]. Function to transform data in preparation for DB,&lt;br /&gt;
+                        *                                &lt;b&gt;attributes&lt;/b&gt;:  Object containing attributes to appear in input
+                        *                              }
+                        */
+                        
+                        Formation.Field = function Field( params ){
+                          var fromDOMDefault = function( value ){
+                            if (! value &amp;&amp; ! this.required ) return undefined;
+                            return value;
+                          };
+                          var toDOMDefault = function(){
+                            var protoself = this;
+                            return protoself.getValue();
+                          };
+                          var fromDOM = params.fromDOM  || fromDOMDefault;
+                          var toDOM   = params.toDOM    || toDOMDefault;
+                        
+                          var editable;
+                          switch ( typeof( params.editable ) ){
+                            case Meteor.isServer:
+                              editable = function(){ return true };
+                              break;
+                            case &quot;boolean&quot;:
+                              var boo = params.editable
+                              editable = function(){ return boo };
+                              break;
+                            case &quot;function&quot;:
+                              editable = params.editable;
+                              break;
+                            default:
+                              editable = function(){ return true };
+                              break;
+                          }
+                        
+                          var savable;
+                          switch ( typeof( params.savable ) ){
+                            case &quot;boolean&quot;:
+                              var boo = params.savable
+                              savable = function(){ return boo };
+                              break;
+                            case &quot;function&quot;:
+                              savable = params.savable;
+                              break;
+                            default:
+                              savable = function(){ return true };
+                              break;
+                          }
+                        
+                          var attributes        = params.attributes || {};
+                        
+                          function setAttributes( attrs ){
+                            var attrs             = attrs || {};
+                            if ( typeof( attrs.bootstrap ) === &#x27;boolean&#x27; ) attributes.bootstrap = attrs.bootstrap;
+                            else attributes.bootstrap = typeof( attributes.bootstrap ) === &#x27;boolean&#x27; ? attributes.bootstrap : true
+                        
+                            attributes.id     = attrs.id    ||  attributes.id     || &#x27;&#x27;;
+                            attributes.class  = attrs.class ||  attributes.class  || &#x27;&#x27;;
+                        
+                            attributes.class      = attributes.class.replace( /form-control/ig, &#x27;&#x27; ).trim();
+                            attributes.class      = attributes.class.replace( /field-required/ig, &#x27;&#x27; ).trim();
+                            if ( attributes.bootstrap ) attributes.class += &#x27; form-control&#x27;;
+                            if ( this.required ) attributes.class += &#x27; field-required&#x27;;
+                            attributes.class = attributes.class.trim();
+                        
+                            attributes.name   = attrs.name    ||  attributes.name   || this.label || &#x27;&#x27;;
+                            attributes.role   = attrs.role    ||  attributes.role   || &#x27;&#x27;;
+                            attributes.style  = attrs.style   ||  attributes.style  || &#x27;&#x27;;
+                        
+                            if      ( typeof( attrs.horizontal ) === &quot;boolean&quot; )      attributes.horizontal = attrs.horizontal
+                            else if ( typeof( attributes.horizontal ) === &quot;boolean&quot; ) attributes.horizontal = attributes.horizontal;
+                            else attributes.horizontal = true;
+                        
+                            return this;
+                          }
+                        
+                          function getAttributes(){
+                            return attributes;
+                          }
+                        
+                          if ( Meteor.isServer ) params.editable = function(){ return true };
+                        
+                          Object.defineProperties( this, {
+                            __name__: { value: &quot;Field&quot; },
+                        
+                            /**
+                            * Label for field
+                            * @property label
+                            * @type String
+                            */
+                            label: { value: params.label || &#x27;&#x27;, writable: true },
+                        
+                            /**
+                            * Help text
+                            * @property helpText
+                            * @type String
+                            */
+                            helpText: { value: params.helpText || &#x27;&#x27; },
+                        
+                            /**
+                            * Widget name
+                            * @property widget
+                            * @type String
+                            */
+                            widget: { value: params.widget || err( &#x27;Please add a widget to this field.&#x27; ) },
+                        
+                        
+                            /**
+                            * Attributes object
+                            * @property attributes
+                            * @type Object
+                            */
+                            attributes: { get: getAttributes, enumerable: false },
+                        
+                        
+                            /**
+                            * Set attributes object
+                            * @property attributes
+                            * @type Function
+                            */
+                            setAttributes: { value: setAttributes, enumerable: false },
+                        
+                            /**
+                            * Value unique to document
+                            * @property unique
+                            * @type Boolean
+                            */
+                            unique: { value: typeof( params.unique ) === &#x27;boolean&#x27; ? params.unique : false },
+                        
+                            /**
+                            * Minimum length / amount
+                            * @property min
+                            * @type Number
+                            */
+                            min: { value: params.min || null },
+                        
+                            /**
+                            * Maximum length / amount
+                            * @property max
+                            * @type Number
+                            */
+                            max: { value: params.max || null },
+                        
+                            /**
+                            * Check to see if field is editable by user; client-side only
+                            * @method editable
+                            * @return Boolean
+                            */
+                            editable: { value: editable },
+                        
+                            /**
+                            * Check to see if field is editable by user; client-side only
+                            * @method editable
+                            * @return Boolean
+                            */
+                            savable: { value: savable },
+                        
+                            /**
+                            * Is this field required?
+                            * @property required
+                            * @type Boolean
+                            */
+                            required: { value: typeof( params.required ) === &#x27;boolean&#x27; ? params.required : true },
+                        
+                            /**
+                            * Get default value for field
+                            * @method defaultValue
+                            * @return {String/Number/Array/Date}
+                            */
+                            defaultValue: { value: typeof( params.defaultValue ) === &quot;function&quot; ? params.defaultValue : function(){ return params.defaultValue } },
+                            _optional: { value: function( validator ){
+                              return this.required ? validator : Match.Optional( validator );
+                            }},
+                        
+                            /**
+                            * Function to prepare data for DOM display
+                            * @method toDOM
+                            * @return Object/String/Number
+                            */
+                            toDOM: { value: toDOM },
+                        
+                            /**
+                            * Function to prepare data for DB entry
+                            * @method fromDOM
+                            * @param value prepare/transform data from DOM for DB entry
+                            * @return Object/String/Number
+                            */
+                            fromDOM: { value: fromDOM },
+                          });
+                        }
+                        
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

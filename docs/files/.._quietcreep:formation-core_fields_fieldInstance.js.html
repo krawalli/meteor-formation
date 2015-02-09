@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>../quietcreep:formation-core/fields/fieldInstance.js - quietcreep-formation</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="quietcreep-formation" src="../assets/css/logo.png" style="max-height: 65%;" title="quietcreep-formation">
+            quietcreep-formation
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>2.0.4</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/Field", "classes/FieldInstance", "classes/Model", "classes/ModelInstance", "classes/ModelSuper", "classes/NewModelInstance", "modules/Field", "modules/FieldInstance", "modules/Formation", "modules/Model", "modules/ModelInstance"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/Field.html">Field</a></li>
+	                            <li><a href="../classes/FieldInstance.html">FieldInstance</a></li>
+	                            <li><a href="../classes/Model.html">Model</a></li>
+	                            <li><a href="../classes/ModelInstance.html">ModelInstance</a></li>
+	                            <li><a href="../classes/ModelSuper.html">ModelSuper</a></li>
+	                            <li><a href="../classes/NewModelInstance.html">NewModelInstance</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                            <li><a href="../modules/Field.html">Field</a></li>
+	                            <li><a href="../modules/FieldInstance.html">FieldInstance</a></li>
+	                            <li><a href="../modules/Formation.html">Formation</a></li>
+	                            <li><a href="../modules/Model.html">Model</a></li>
+	                            <li><a href="../modules/ModelInstance.html">ModelInstance</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <div class="page-header">
+                            <h1>../quietcreep:formation-core/fields/fieldInstance.js <small>File</small></h1>
+                        </div>
+                        
+                        <div class="file">
+                            <pre class="prettyprint linenums">
+                        /**
+                        * @module Formation
+                        * @submodule FieldInstance
+                        */
+                        
+                        var err = function( message ){ throw new Error( message ); };
+                        
+                        Formation.FieldInstance = function( params ){
+                        
+                          /**
+                          * FieldInstance; does the actual handling and validation of data
+                          * @class FieldInstance
+                          * @constructor
+                          * @param {String/Number/Date} value
+                          */
+                          function FieldInstance( value ){
+                            var self  = this;
+                            var attr  = new ReactiveVar( _.clone( this.field.attributes ));
+                            var value = value === undefined || value === null ? this.field.defaultValue() : value;
+                        
+                            function setAttributes( attributes ){
+                              var oldAttributes = this.field.attributes;
+                              var attributes    = attributes || oldAttributes || {};
+                        
+                              if      ( typeof( attributes.bootstrap ) === &quot;boolean&quot; )    attributes.bootstrap = attributes.bootstrap;
+                              else if ( typeof( oldAttributes.bootstrap ) === &quot;boolean&quot; ) attributes.bootstrap = oldAttributes.bootstrap;
+                              else attributes.bootstrap = true;
+                        
+                              attributes.id     = attributes.id     || oldAttributes.id     || &#x27;&#x27;;
+                              attributes.class  = attributes.class  || oldAttributes.class  || &#x27;&#x27;;
+                        
+                              attributes.class      = attributes.class.replace( /form-control/ig, &#x27;&#x27; ).trim();
+                              attributes.class      = attributes.class.replace( /field-required/ig, &#x27;&#x27; ).trim();
+                              if ( attributes.bootstrap ) attributes.class += &#x27; form-control&#x27;;
+                              if ( this.required ) attributes.class += &#x27; field-required&#x27;;
+                        
+                              attributes.name   = attributes.name   || oldAttributes.name   || this.field.label || &#x27;&#x27;;
+                              attributes.role   = attributes.role   || oldAttributes.role   || &#x27;&#x27;;
+                              attributes.style  = attributes.style  || oldAttributes.style  || &#x27;&#x27;;
+                        
+                              if      ( typeof( attributes.horizontal ) === &quot;boolean&quot; )     attributes.horizontal = attributes.horizontal;
+                              else if ( typeof( oldAttributes.horizontal ) === &quot;boolean&quot; )  attributes.horizontal = oldAttributes.horizontal
+                              else attributes.horizontal = true;
+                        
+                              attr.set( attributes );
+                              return this;
+                            }
+                        
+                            function getAttributes(){
+                              return attr.get();
+                            }
+                        
+                        
+                            Object.defineProperties( this, {
+                              /**
+                              * Actual value of field
+                              * @property value
+                              */
+                              value:          { value: value, enumerable: true, writable: true },
+                              valueOf:        { value: function(){ return self.value } },
+                             	_editMode:      { value: new ReactiveVar( false ) },
+                              _errors:        { value: new ReactiveVar( [] ) },
+                              attributes:     { value: getAttributes },
+                              setAttributes:  { value: setAttributes },
+                            });
+                          }
+                        
+                          Object.defineProperties( FieldInstance.prototype, {
+                            /**
+                            * Field that this instance refers to
+                            * @property field
+                            * @type Field
+                            */
+                            field: { value: params.field },
+                        
+                            /**
+                            * Function to prepare data for DOM display
+                            * @method toDOM
+                            * @return Object/String/Number
+                            */
+                            toDOM: { value: params.field.toDOM },
+                        
+                            /**
+                            * Function to prepare data for DB entry
+                            * @method fromDOM
+                            * @param value prepare/transform data from DOM for DB entry
+                            * @return Object/String/Number
+                            */
+                            fromDOM: { value: params.field.fromDOM },
+                        
+                            /**
+                            * Name of template widget to use for display
+                            * @property widget
+                            * @type String
+                            */
+                            widget: { value: params.field.widget },
+                        
+                            /**
+                            * Check to see if field is editable by user; client-side only
+                            * @method editable
+                            * @return Boolen
+                            */
+                            editable: { value: params.field.editable },
+                        
+                        
+                            /**
+                            * Check to see if field is savable by user;
+                            * @method editable
+                            * @return Boolen
+                            */
+                            savable: { value: params.field.savable },
+                        
+                        
+                            /**
+                            * If field is editable by user, toggle editMode
+                            * @method editMode
+                            * @param {Boolean} boo [optional]
+                            * @return Boolean
+                            */
+                            editMode: { value: function( boo ){
+                                if ( this.editable() ){
+                                  if ( typeof( boo ) === &#x27;undefined&#x27; ){
+                                    this._editMode.set(! this._editMode.get() );
+                                  } else if ( typeof( boo ) !== &#x27;boolean&#x27; ){
+                                    this._editMode.set( false );
+                                  } else {
+                                    this._editMode.set( boo );
+                                  }
+                                }
+                        
+                                return this._editMode.get();
+                              }
+                            },
+                        
+                        
+                            /**
+                            * Returns current state of editMode
+                            * @method inEditMode
+                            * @return Boolean
+                            */
+                            inEditMode: { value: function(){
+                                return this._editMode.get();
+                              }
+                            },
+                        
+                        
+                            /**
+                            * Field-level errors
+                            * @method errors
+                            * @return Array
+                            */
+                            errors: { value: function(){
+                                return this._errors.get();
+                              }
+                            },
+                        
+                            pattern: { value: params.field.pattern },
+                            _optional: { value: params.field._optional },
+                            required: { value: params.field.required },
+                            min: { value: params.field.min },
+                            max: { value: params.field.max },
+                        
+                            /**
+                            * Validate instance; returns undefined on success; errors are caught and stored in _errors
+                            * @method validate
+                            */
+                            validate: { value: function(){
+                                this._errors.set( [] );
+                        
+                                try {
+                                  this.value = this.fromDOM( this.value );  //if not clean already
+                                  check( this.value, this.pattern() );
+                                } catch( e ){
+                                  var errs = this._errors.get();
+                                  errs.push( e );
+                                  this._errors.set( errs );
+                                }
+                              }
+                            },
+                        
+                        
+                            /**
+                            * If field has errors, return true; else false
+                            * @method hasErrors
+                            * @return Boolean
+                            */
+                            hasErrors: { value: function(){
+                                return ! _.isEmpty( this.errors() );
+                              }
+                            },
+                        
+                        
+                            /**
+                            * Return plain JavaScript value
+                            * @method getValue
+                            * @return Object
+                            */
+                            getValue: { value: function(){
+                                // if ( this.value instanceof Array &amp;&amp; _.isEmpty( this.value ) ){
+                                //   return undefined;
+                                // } else if ( this.value === &#x27;&#x27; &amp;&amp; ! this.field.required ){
+                                //   return undefined;
+                                // }
+                                if (! this.required &amp;&amp; ! this.value &amp;&amp; typeof( this.value ) !== &quot;number&quot; ) return null;
+                                if ( Meteor.isServer &amp;&amp; ! this.savable() ) return undefined;
+                                return this.value;
+                              }
+                            },
+                        
+                        
+                            /**
+                            * Set plain JavaScript value
+                            * @method getValue
+                            * @param {value} value
+                            * @return Object
+                            */
+                            setValue: { value: function setValue( value ){
+                              if ( this.savable() ) this.value = value;
+                              return this.value;
+                            }}
+                        
+                          });
+                        
+                          if ( params.field.choices ){
+                            Object.defineProperty( FieldInstance.prototype, &quot;choices&quot;, { value: params.field.choices })
+                          }
+                        
+                          if ( params.field.filter ){
+                            Object.defineProperty( FieldInstance.prototype, &quot;filter&quot;, { value: params.field.filter })
+                          }
+                        
+                          if ( params.field.model ){
+                            Object.defineProperty( FieldInstance.prototype, &quot;model&quot;, { value: params.field.model })
+                          }
+                        
+                          // if ( Meteor.isServer ){
+                            Object.defineProperty( FieldInstance.prototype, &quot;getUnsavableValues&quot;, { value: function getUnsavableValues(){
+                              if (! this.savable() ) return this.value;
+                            }})
+                          // }
+                        
+                          return FieldInstance;
+                        };
+                        
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>
