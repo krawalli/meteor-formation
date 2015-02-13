@@ -43,7 +43,7 @@ If you need access to a collection you defined inside a Model, you can use MyMod
   });
 ```
 
-To define the schema inside the model add a schema property like so:
+To define the schema inside the model add a schema object. Each value inside the schema object should be either a Formation Field, a Model, or an Array with a single Model in it.
 ```javascript
   Items = new Formation.Model({
     collection: new Meteor.Collection('items'),
@@ -60,39 +60,44 @@ To define the schema inside the model add a schema property like so:
 ### Fields
 Because Formation prioritizes convention over configuration, there are a variety of Fields to choose from, each one tailored to a specific data type, display type, or handling method.
 
-Below is typical usage along with acceptable arguments.
-
+All the built-in fields inherit from the generic **Formation.Field**, so most of the fields include these options. The generic field is missing some key components for effective use, so don't expect to use this unless you're creating your own field. Except for **widget**, the values for the options listed are the default values.
 ```javascript
-// A generic field, missing some key components for effective use;
-// Formation.Field is used as the super class for all built-in fields;
-// Values listed are default values
 var genericField = new Formation.Field({
   min: null,                // minimum value or length
   max: null,                // minimum value or length
   required: true,           // whether field is required to have a value
-  label: '',                // appears as field label; defaults to title case version of field name
-  widget: 'CustomWidget',   // the name of the template to use to display the field; each field has its own default widget
-  unique: false,            // the value of this field should be unique inside this collection
-  defaultValue: undefined   // a value or function to initialize a field with if no value is provided
-  summary: undefined        // a function to return a transformed value for display mode, if unset, will return field.toDOM()
+  label: '',                // appears as field label; defaults to title case
+                            // version of field name
+  widget: 'CustomWidget',   // the name of the template to use to display the
+                            // field; each field has its own default widget
+  unique: false,            // the value of this field should be unique inside
+                            // this collection
+  defaultValue: undefined   // a value or function to initialize a field with
+                            // if no value is provided
+  summary: undefined        // a function to return a transformed value for
+                            // display mode, if unset, will return field.toDOM()
 });
+```
 
-// Each field below has all of the above options, but certain fields require specific options.
-// If an option is required or is specific to a field, it will appear below.
 
+Each field below has all of the above options, but certain fields require specific options. If an option is required or is specific to a field, it will appear below.
+```javascript
 // for Boolean data
 // default widget is CheckboxInput;
 // default value is false unless otherwise specified
 var BooleanField = new Formation.Fields.Boolean;
 
+
 // for String data
 // default widget is TextInput; another pre-made option is TextArea
 var CharField = new Formation.Fields.Char({ max: 255 });
+
 
 // For an array of strings
 // default widget is TextInput
 // optional delimiter value for separating string into array, default is a comma
 var CharArray = new Formation.Fields.CharArray({ delimiter: ',' });
+
 
 // For a single value from a set of choices
 // default widget is SelectInput
@@ -101,6 +106,7 @@ var SingleChoice = new Formation.Fields.SingleChoice({
   choices: [ 'apple', 'oranges', 'bananas' ]
 });
 
+
 // For a single value from a set of choices
 // default widget is SelectInput
 // choices can be an array or a function that returns an array
@@ -108,21 +114,25 @@ var MultipleChoice = new Formation.Fields.MultipleChoice({
   choices: function(){ return [ '1 potato', '2 potato', '3 potato', '4' ] }
 });
 
+
 // For a date with no time value (time set to 00:00:01)
 // default widget is DateInput
 // min and max can be Date objects or milliseconds since 00:00:00 1 January 1970
 var DateField = new Formation.Fields.Date
+
 
 // For a date with time value
 // default widget is DatetimeInput
 // min and max can be Date objects or milliseconds since 00:00:00 1 January 1970
 var DatetimeField = new Formation.Fields.Datetime;
 
+
 // For an email address
 // default widget is EmailInput
 var EmailField = new Formation.Fields.Email({
   max: 255
 });
+
 
 // For a single reference to another model; value is _id; similar to a foreign key
 // default widget ModelSelect
@@ -131,15 +141,18 @@ var ModelSingleChoice = new Formation.Fields.ModelSingleChoice({
   filter: { name: { '$in': [ 'this one', 'that one', 'the other one' ] }}  // optional query filter for choices
 });
 
+
 // For array of references to another model; value is array of _id's; similar to M2M field
 // default widget ModelSelectMultiple
 var ModelSingleChoice = new Formation.Fields.ModelMultipleChoice({
   model: MyModel,
 });
 
+
 // for Number data
 // default widget is NumberInput; another pre-made option is TextArea
 var NumberField = new Formation.Fields.Number;
+
 
 // For an array of Numbers
 // default widget is TextArray
@@ -147,17 +160,20 @@ var NumberField = new Formation.Fields.Number;
 // will attempt to convert split values into Numbers
 var NumberArray = new Formation.Fields.NumberArray({ delimiter: ',' });
 
+
 // For passwords; exactly like Fields.Char, but hides input values
 // default widget is PasswordInput
 var PasswordField = new Formation.Fields.Password({
   max: 255
 });
 
+
 // For slugs; exactly like Fields.Char, but slugifies input values
 // default widget is SlugInput
 var SlugField = new Formation.Fields.Slug({
   max: 255,
 });
+
 
 // For URLs; exactly like Fields.Char, but expects valid URLs
 // default widget is URLInput
@@ -201,40 +217,49 @@ Here are a a few methods available on a ModelInstance.
 // callback on ModelInstances receives errors, then updated value;
 item.save(/* callback */);
 
+
 // first validate, then save (insert) contents of NewModelInstance;
 // callback on NewModelInstances receives errors first, then _id value;
 newItem.save(/* callback */);
 
+
 // validate the contents of the ModelInstance
 item.validate(/* callback */);
+
 
 // get top-level (model specific) errors;
 // returns array of errors
 var errors = item.errors();
 
+
 // get all errors for each field;
 // returns an object; keys are field names, values are array of errors
 var allErrors = item.getAllErrors();
 
+
 // get the raw values of each field and return as a JS object
 var itemValues = item.getValue();
+
 
 // toggle or set editMode
 item.editMode(/* boolean */);
 
+
 // set field values with either raw JS object or another ModelInstance
 item.setValue({ itemName: "here's a new name" });
+
 
 // check whether ModelInstance is new
 var isItemNew     = item.isNew()      // returns false
 var isNewItemNew  = newItem.isNew()   // returns true
 
+
 // check whether ModelInstance is savable
 var isItemSavable = item.savable();
 
+
 // check whether ModelInstance is removable;
 var isItemRemovable = item.removable();
-
 ```
 
 
@@ -242,11 +267,16 @@ var isItemRemovable = item.removable();
 
 
 ### In Templates
-Now after you defined your Model and created a ModelInstance, you can easily use it in template with the **dxField** template. Out of the box, the dxField template will render the input field, validator messages etc.
+Now after you defined your Model and created a ModelInstance, you can easily use the ModelInstance in template with the **dxField** template. Out of the box, the dxField template will render the input field, validator messages etc.
 
 ```Handlebars
 <template name="myItems">
   <form class="form-horizontal" role="form">
+    {{# each errors }}
+      {{! show top level errors }}
+      <span class="errors">{{ message }}</span>
+    {{/ each }}
+
     {{> dxField itemName }}
 
     {{> dxButtons }}
@@ -425,11 +455,9 @@ Here's a list of options that you can pass into a Model:
 
 --------------------------------------
 
+
 ## Best Practice
 Hints and Tips (TODO)
-
-## Sample Models
-Common patterns for models for easier start with new models for your project. Please share your models with the rest of the world by placing the source of them in issue or pull-request - Thank you!
 
 ### Meteor User
 (TODO)
