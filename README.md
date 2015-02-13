@@ -58,6 +58,9 @@ To define the schema inside the model add a schema object. Each value inside the
 ```
 
 
+### ** Note: As of now, for saving purposes, Models must be declared globally (i.e. without 'var') on both the client and server to enable saving. ** 
+
+
 --------------------------------------
 
 
